@@ -1,0 +1,1061 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DPDP CMP — Consolidated Notice for Consent (Demo UI)</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#111a2e;
+      --card2:#0f172a;
+      --text:#e6e9f2;
+      --muted:#a9b2c7;
+      --line:rgba(255,255,255,.10);
+      --chip:rgba(255,255,255,.09);
+      --good:#22c55e;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+      --accent:#60a5fa;
+      --accent2:#a78bfa;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(96,165,250,.25), transparent 55%),
+                  radial-gradient(1000px 500px at 90% 0%, rgba(167,139,250,.18), transparent 50%),
+                  var(--bg);
+      color:var(--text);
+    }
+    a{color:var(--accent)}
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 18px 64px;
+    }
+    header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:18px;
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .logo{
+      width:44px;height:44px;border-radius:14px;
+      background: linear-gradient(135deg, rgba(96,165,250,.95), rgba(167,139,250,.95));
+      box-shadow: var(--shadow);
+      display:grid;place-items:center;
+      font-weight:800;
+      letter-spacing:.5px;
+    }
+    h1{
+      font-size: 18px;
+      margin:0 0 6px;
+      font-weight:800;
+    }
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size: 13px;
+      line-height:1.4;
+      max-width: 620px;
+    }
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .btn{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-weight:650;
+      font-size:13px;
+      transition: transform .05s ease, background .15s ease, border .15s ease;
+      user-select:none;
+    }
+    .btn:hover{background: rgba(255,255,255,.09)}
+    .btn:active{transform: translateY(1px)}
+    .btn.primary{
+      border:1px solid rgba(96,165,250,.35);
+      background: rgba(96,165,250,.18);
+    }
+    .btn.danger{
+      border:1px solid rgba(239,68,68,.35);
+      background: rgba(239,68,68,.12);
+    }
+
+    .pillrow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin: 14px 0 18px;
+    }
+    .pill{
+      background: var(--chip);
+      border:1px solid var(--line);
+      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:999px;
+      background: rgba(255,255,255,.35);
+    }
+    .dot.good{background: var(--good)}
+    .dot.warn{background: var(--warn)}
+    .dot.bad{background: var(--bad)}
+    .dot.accent{background: var(--accent)}
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .cardhead{
+      padding: 14px 14px 12px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+    }
+    .cardtitle{
+      display:flex;
+      align-items:flex-start;
+      gap: 10px;
+      min-width: 0;
+    }
+    .ico{
+      width: 34px;height:34px;border-radius: 12px;
+      background: rgba(255,255,255,.07);
+      border:1px solid var(--line);
+      display:grid;place-items:center;
+      flex: 0 0 auto;
+    }
+    .cardtitle h2{
+      margin:0;
+      font-size: 14px;
+      font-weight: 850;
+      line-height:1.2;
+    }
+    .meta{
+      margin-top: 6px;
+      display:flex;
+      gap: 8px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .chip{
+      font-size: 12px;
+      color: var(--muted);
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      padding: 6px 8px;
+      border-radius: 999px;
+      display:inline-flex;
+      align-items:center;
+      gap: 6px;
+    }
+    .chip strong{color: var(--text); font-weight:750}
+    .toggleWrap{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-end;
+      gap:8px;
+      flex: 0 0 auto;
+    }
+    .status{
+      font-size: 11.5px;
+      color: var(--muted);
+      text-align:right;
+      max-width: 250px;
+      line-height:1.2;
+    }
+    .toggle{
+      position:relative;
+      width: 52px;
+      height: 30px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.08);
+      cursor:pointer;
+      transition: background .15s ease, border .15s ease;
+      outline:none;
+    }
+    .toggle[aria-checked="true"]{
+      background: rgba(34,197,94,.24);
+      border-color: rgba(34,197,94,.35);
+    }
+    .toggle[disabled]{
+      cursor:not-allowed;
+      opacity:.65;
+      filter:saturate(.7);
+    }
+    .knob{
+      position:absolute;
+      top: 3px;
+      left: 3px;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.85);
+      transition: transform .15s ease;
+      box-shadow: 0 6px 14px rgba(0,0,0,.25);
+    }
+    .toggle[aria-checked="true"] .knob{
+      transform: translateX(22px);
+    }
+    .body{
+      padding: 0 14px 14px;
+      border-top: 1px solid var(--line);
+      background: rgba(15,23,42,.35);
+    }
+    .section{
+      padding: 12px 0;
+      border-bottom: 1px dashed rgba(255,255,255,.10);
+    }
+    .section:last-child{border-bottom:none}
+    .row{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    @media (min-width: 760px){
+      .row{
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+    }
+    .label{
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+    ul{
+      margin: 0;
+      padding-left: 16px;
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    li{margin: 4px 0}
+    .small{
+      font-size: 12.5px;
+      color: var(--text);
+      line-height: 1.45;
+    }
+    details{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      border-radius: 14px;
+      padding: 10px 12px;
+    }
+    details summary{
+      cursor:pointer;
+      font-weight: 750;
+      font-size: 13px;
+      color: var(--text);
+      list-style:none;
+    }
+    details summary::-webkit-details-marker{display:none}
+    details .content{
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.5;
+    }
+    .subcard{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.045);
+      border-radius: 16px;
+      padding: 12px;
+      margin-top: 12px;
+    }
+    .subhead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom: 8px;
+    }
+    .subhead h3{
+      margin:0;
+      font-size: 13px;
+      font-weight: 850;
+    }
+    .submeta{
+      display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+    }
+    .hint{
+      color: var(--muted);
+      font-size: 12px;
+      line-height:1.4;
+      margin-top: 8px;
+    }
+    .footer{
+      margin-top: 18px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      border-radius: var(--radius);
+      padding: 14px;
+    }
+    .footer h4{
+      margin:0 0 8px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+    .footer .cols{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    @media (min-width: 820px){
+      .footer .cols{grid-template-columns: 1fr 1fr 1fr}
+    }
+    .toast{
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(17,26,46,.94);
+      border:1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 14px;
+      color: var(--text);
+      box-shadow: var(--shadow);
+      font-size: 12.5px;
+      opacity: 0;
+      pointer-events:none;
+      transition: opacity .18s ease, transform .18s ease;
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .toast.show{
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 11px;
+      color: var(--muted);
+      border:1px solid var(--line);
+      padding: 2px 6px;
+      border-radius: 8px;
+      background: rgba(255,255,255,.04);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">DP</div>
+        <div>
+          <h1>Consolidated Notice for Consent</h1>
+          <p class="subtitle">
+            Your data, your choice. Review how we use your personal data for the products you hold.
+            Optional consents can be changed anytime.
+          </p>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <button class="btn primary" id="acceptAll">Accept all optional</button>
+        <button class="btn danger" id="denyAll">Deny all optional</button>
+        <button class="btn" id="expandAll">Expand all</button>
+        <button class="btn" id="collapseAll">Collapse all</button>
+      </div>
+    </header>
+
+    <div class="pillrow" id="summaryRow">
+      <div class="pill"><span class="dot good"></span>Mandatory (locked)</div>
+      <div class="pill"><span class="dot accent"></span>Optional (toggle)</div>
+      <div class="pill"><span class="dot warn"></span>Conditional (rule-based)</div>
+      <div class="pill"><span class="dot"></span><span>Demo: Press</span> <span class="kbd">C</span> <span>to simulate “Default”</span></div>
+    </div>
+
+    <main class="grid" id="cards"></main>
+
+    <section class="footer" id="globalFooter">
+      <h4>Your Rights</h4>
+      <div class="cols">
+        <div class="small">
+          <div class="label">Rights available</div>
+          <ul>
+            <li>Access and review your personal data</li>
+            <li>Correct inaccurate data</li>
+            <li>Withdraw optional consent at any time</li>
+            <li>Request erasure, where applicable</li>
+            <li>Grievance redressal</li>
+          </ul>
+        </div>
+        <div class="small">
+          <div class="label">How to withdraw consent</div>
+          You can withdraw optional consents anytime from <strong>Profile → Privacy Settings</strong>.
+          Withdrawal is as easy as giving consent. Processing linked to withdrawn consent will stop going forward.
+        </div>
+        <div class="small">
+          <div class="label">Grievance & contact</div>
+          <strong>Data Protection Officer:</strong> <em>[email / phone placeholder]</em><br/>
+          <span style="color:var(--muted)">You will receive an acknowledgement and reference number for tracking.</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast"><span class="dot accent"></span><span id="toastText">Updated.</span></div>
+
+  <script>
+    // -----------------------------
+    // Demo data model (API-friendly)
+    // -----------------------------
+    const state = {
+      // Simulate which products customer holds
+      holdings: {
+        savings: true,
+        current: true,
+        loan: true,
+        credit: true,
+        fd: true,
+      },
+      // Simulate conditional rule (e.g., default for collections)
+      conditions: {
+        isInDefault: false,
+      },
+      consents: {
+        // global mandatory (always true)
+        kyc: { type: "mandatory", enabled: true, locked: true },
+
+        // Savings: mandatory + optional
+        savings_core: { type: "mandatory", enabled: true, locked: true },
+        savings_insights: { type: "optional", enabled: false, locked: false },
+
+        // Current: mandatory only
+        current_core: { type: "mandatory", enabled: true, locked: true },
+
+        // Loan: mandatory + conditional
+        loan_core: { type: "mandatory", enabled: true, locked: true },
+        loan_collections: { type: "conditional", enabled: true, locked: true, visibleWhen: () => state.conditions.isInDefault },
+
+        // Credit: mandatory + optional
+        credit_core: { type: "mandatory", enabled: true, locked: true },
+        credit_profiling: { type: "optional", enabled: false, locked: false },
+
+        // FD: mandatory only
+        fd_core: { type: "mandatory", enabled: true, locked: true },
+      }
+    };
+
+    const cardsModel = [
+      {
+        id: "global_kyc",
+        icon: "🔒",
+        title: "Identity & Regulatory Compliance (KYC)",
+        chips: [
+          { label: "Status", value: "Mandatory (required by law)" }
+        ],
+        identifier: null,
+        sections: [
+          { label: "Purpose", bullets: [
+            "Verify and maintain your identity",
+            "Meet legal, regulatory, and AML obligations",
+            "Prevent fraud and unauthorized access"
+          ]},
+          { label: "Data we will use", bullets: [
+            "Name, date of birth",
+            "PAN / Aadhaar (or equivalent ID)",
+            "Address and contact details",
+            "Photograph, signature",
+            "Officially Valid Document (OVD) details"
+          ]},
+          { label: "Retention", text:
+            "<strong>Minimum:</strong> As long as required to maintain your relationship with the bank<br/>" +
+            "<strong>Maximum:</strong> As required by applicable laws and regulators<br/>" +
+            "<strong>Expiry:</strong> As per statutory timelines after account closure"
+          }
+        ],
+        processors: [
+          "The Bank (Data Fiduciary)",
+          "Regulated KYC service providers and government registries, as permitted by law"
+        ],
+        toggleKey: "kyc",
+        defaultExpanded: false
+      },
+
+      // Savings / Salary
+      {
+        id: "savings",
+        icon: "🏦",
+        title: "Savings / Salary Account",
+        chips: [
+          { label: "Account ID", value: "SB •••• 4821" }
+        ],
+        showWhen: () => state.holdings.savings,
+        groups: [
+          {
+            groupId: "savings_core",
+            heading: "Mandatory (Locked)",
+            statusText: "Mandatory (core banking)",
+            toggleKey: "savings_core",
+            locked: true,
+            sections: [
+              { label: "Purpose", bullets: [
+                "Operate your account and process transactions",
+                "Generate statements and regulatory reports"
+              ]},
+              { label: "Data we will use", bullets: [
+                "Account number",
+                "Transaction details",
+                "Nominee details (if applicable)"
+              ]},
+              { label: "Retention", text:
+                "<strong>Minimum:</strong> Duration of account<br/>" +
+                "<strong>Maximum:</strong> As required by law<br/>" +
+                "<strong>Expiry:</strong> As per statutory timelines after closure"
+              }
+            ],
+          },
+          {
+            groupId: "savings_insights",
+            heading: "Optional",
+            statusText: "Optional (toggle)",
+            toggleKey: "savings_insights",
+            locked: false,
+            hint: "Turning this off will stop future use for offers/insights. Past processing remains as per law/policy.",
+            sections: [
+              { label: "Purpose", bullets: [
+                "Personalised offers and insights",
+                "Relationship management"
+              ]},
+              { label: "Data we will use", bullets: [
+                "Transaction patterns (not individual merchant names)"
+              ]},
+              { label: "Retention", text:
+                "<strong>Minimum:</strong> While consent is active<br/>" +
+                "<strong>Maximum:</strong> As per internal policy<br/>" +
+                "<strong>Expiry:</strong> On withdrawal or account closure"
+              }
+            ],
+            processors: [
+              "Bank systems",
+              "Authorised analytics partners"
+            ]
+          }
+        ],
+        defaultExpanded: false
+      },
+
+      // Current
+      {
+        id: "current",
+        icon: "🧾",
+        title: "Current Account (Business / MSME)",
+        chips: [{ label: "Account ID", value: "CA •••• 9033" }],
+        showWhen: () => state.holdings.current,
+        groups: [
+          {
+            groupId: "current_core",
+            heading: "Mandatory (Locked)",
+            statusText: "Mandatory",
+            toggleKey: "current_core",
+            locked: true,
+            sections: [
+              { label: "Purpose", bullets: [
+                "Business transaction processing",
+                "Compliance and audit requirements"
+              ]},
+              { label: "Data we will use", bullets: [
+                "Account details",
+                "Business transaction data",
+                "Authorized signatory details"
+              ]},
+              { label: "Retention", text:
+                "<strong>Minimum:</strong> Duration of account<br/>" +
+                "<strong>Maximum:</strong> As required by law<br/>" +
+                "<strong>Expiry:</strong> As per statutory timelines"
+              }
+            ],
+            processors: [
+              "Bank",
+              "Regulated service providers (payment, audit)"
+            ]
+          }
+        ],
+        defaultExpanded: false
+      },
+
+      // Loan
+      {
+        id: "loan",
+        icon: "🏠",
+        title: "Retail Loan (Home / Personal / Auto)",
+        chips: [{ label: "Loan ID", value: "LN •••• 7719" }],
+        showWhen: () => state.holdings.loan,
+        groups: [
+          {
+            groupId: "loan_core",
+            heading: "Mandatory (Locked)",
+            statusText: "Mandatory + Conditional",
+            toggleKey: "loan_core",
+            locked: true,
+            sections: [
+              { label: "Purpose", bullets: [
+                "Credit assessment and underwriting",
+                "Loan servicing and repayment tracking"
+              ]},
+              { label: "Data we will use", bullets: [
+                "Loan details",
+                "Repayment history",
+                "Employment / income information (as submitted)"
+              ]},
+              { label: "Retention", text:
+                "<strong>Minimum:</strong> Loan tenure<br/>" +
+                "<strong>Maximum:</strong> As required by law<br/>" +
+                "<strong>Expiry:</strong> As per statutory timelines after closure"
+              }
+            ],
+            processors: ["Bank systems"]
+          },
+          {
+            groupId: "loan_collections",
+            heading: "Conditional (Appears only if applicable)",
+            statusText: "Conditional (rule-based)",
+            toggleKey: "loan_collections",
+            locked: true,
+            conditional: true,
+            visibleWhen: () => state.conditions.isInDefault,
+            hint: "This appears only if your account enters default. It cannot be disabled while applicable.",
+            sections: [
+              { label: "Purpose", bullets: [
+                "Collections and recovery in case of default"
+              ]},
+              { label: "Data we will use", bullets: [
+                "Overdue status",
+                "Contact details for recovery communication"
+              ]},
+              { label: "Retention", text:
+                "<strong>Minimum:</strong> While dues remain unpaid<br/>" +
+                "<strong>Maximum:</strong> As required by law<br/>" +
+                "<strong>Expiry:</strong> On settlement and closure"
+              }
+            ],
+            processors: ["Bank collections team", "Authorised recovery service providers (if engaged)"]
+          }
+        ],
+        disclosures: [
+          {
+            title: "Credit Bureau Disclosure",
+            text: "Your loan information will be shared with authorised credit bureaus for credit reporting and risk assessment."
+          }
+        ],
+        defaultExpanded: false
+      },
+
+      // Credit
+      {
+        id: "credit",
+        icon: "💳",
+        title: "Credit Card / Overdraft",
+        chips: [{ label: "Card ID", value: "CC •••• 1145" }],
+        showWhen: () => state.holdings.credit,
+        groups: [
+          {
+            groupId: "credit_core",
+            heading: "Mandatory (Locked)",
+            statusText: "Mandatory + Optional",
+            toggleKey: "credit_core",
+            locked: true,
+            sections: [
+              { label: "Purpose", bullets: [
+                "Transaction authorisation and settlement",
+                "Fraud detection and dispute handling",
+                "Credit reporting"
+              ]},
+              { label: "Data we will use", bullets: [
+                "Card transactions",
+                "Credit limit and utilisation",
+                "Payment and delinquency status"
+              ]},
+              { label: "Retention", text:
+                "<strong>Minimum:</strong> While card is active<br/>" +
+                "<strong>Maximum:</strong> As required by law<br/>" +
+                "<strong>Expiry:</strong> As per statutory timelines"
+              }
+            ],
+            processors: ["Bank systems", "Card network / payment processors"]
+          },
+          {
+            groupId: "credit_profiling",
+            heading: "Optional",
+            statusText: "Optional (toggle)",
+            toggleKey: "credit_profiling",
+            locked: false,
+            sections: [
+              { label: "Purpose", bullets: [
+                "Behavioural profiling for spend insights",
+                "Personalised offers and rewards"
+              ]},
+              { label: "Data we will use", bullets: [
+                "Category-level spend patterns (e.g., travel, dining)"
+              ]},
+              { label: "Retention", text:
+                "<strong>Minimum:</strong> While consent is active<br/>" +
+                "<strong>Maximum:</strong> As per internal policy<br/>" +
+                "<strong>Expiry:</strong> On withdrawal"
+              }
+            ],
+            processors: ["Bank insights engine", "Rewards / offers partners (as applicable)"]
+          }
+        ],
+        disclosures: [
+          {
+            title: "Credit Bureau Disclosure",
+            text: "Card usage and repayment behaviour will be reported to authorised credit bureaus."
+          }
+        ],
+        defaultExpanded: false
+      },
+
+      // FD
+      {
+        id: "fd",
+        icon: "💰",
+        title: "Fixed Deposit / Investment Product",
+        chips: [{ label: "FD ID", value: "FD •••• 5562" }],
+        showWhen: () => state.holdings.fd,
+        groups: [
+          {
+            groupId: "fd_core",
+            heading: "Mandatory (Locked)",
+            statusText: "Mandatory",
+            toggleKey: "fd_core",
+            locked: true,
+            sections: [
+              { label: "Purpose", bullets: [
+                "Manage deposit lifecycle and interest payouts",
+                "Tax reporting"
+              ]},
+              { label: "Data we will use", bullets: [
+                "FD number",
+                "Deposit amount and tenure",
+                "Payout instructions"
+              ]},
+              { label: "Retention", text:
+                "<strong>Minimum:</strong> Deposit tenure<br/>" +
+                "<strong>Maximum:</strong> As required by law<br/>" +
+                "<strong>Expiry:</strong> As per statutory timelines after maturity/closure"
+              }
+            ],
+            processors: ["Bank systems", "Authorised tax/reporting partners"]
+          }
+        ],
+        defaultExpanded: false
+      }
+    ];
+
+    // -----------------------------
+    // UI rendering
+    // -----------------------------
+    const cardsEl = document.getElementById("cards");
+    const toastEl = document.getElementById("toast");
+    const toastText = document.getElementById("toastText");
+
+    function showToast(msg){
+      toastText.textContent = msg;
+      toastEl.classList.add("show");
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(()=> toastEl.classList.remove("show"), 1500);
+    }
+
+    function chip(label, value){
+      return `<span class="chip"><span style="opacity:.8">${label}:</span> <strong>${value}</strong></span>`;
+    }
+
+    function toggleButton(consentKey, lockedOverride){
+      const c = state.consents[consentKey];
+      const locked = lockedOverride ?? c.locked;
+      const enabled = !!c.enabled;
+      const disabled = locked;
+      const status = locked ? "Locked ON (mandatory)" : (enabled ? "ON" : "OFF");
+      return `
+        <div class="toggleWrap">
+          <div class="status">${status}</div>
+          <button class="toggle" role="switch" aria-checked="${enabled}" data-key="${consentKey}" ${disabled ? "disabled" : ""} aria-label="${consentKey}">
+            <span class="knob"></span>
+          </button>
+        </div>
+      `;
+    }
+
+    function renderGroup(group){
+      const c = state.consents[group.toggleKey];
+      const isConditional = !!group.conditional;
+      const visible = isConditional ? group.visibleWhen() : true;
+      if(!visible) return "";
+
+      const statusChip = group.locked
+        ? chip("Status","Mandatory (locked)")
+        : chip("Status","Optional (toggle)");
+
+      const conditionalChip = isConditional ? chip("Rule","Conditional") : "";
+      const headRight = toggleButton(group.toggleKey, group.locked);
+
+      const sectionsHtml = group.sections.map(sec => {
+        if(sec.bullets){
+          return `
+            <div>
+              <div class="label">${sec.label}</div>
+              <ul>${sec.bullets.map(b => `<li>${b}</li>`).join("")}</ul>
+            </div>
+          `;
+        }
+        return `
+          <div>
+            <div class="label">${sec.label}</div>
+            <div class="small">${sec.text}</div>
+          </div>
+        `;
+      }).join("");
+
+      const processorsHtml = (group.processors && group.processors.length)
+        ? `
+          <div class="section">
+            <details>
+              <summary>Who processes this?</summary>
+              <div class="content">${group.processors.map(p => `• ${p}`).join("<br/>")}</div>
+            </details>
+          </div>
+        `
+        : "";
+
+      const hintHtml = group.hint ? `<div class="hint">${group.hint}</div>` : "";
+
+      return `
+        <div class="subcard" data-group="${group.groupId}">
+          <div class="subhead">
+            <div>
+              <h3>${group.heading}</h3>
+              <div class="submeta">
+                ${statusChip}
+                ${conditionalChip}
+              </div>
+            </div>
+            ${headRight}
+          </div>
+
+          <div class="row section">
+            ${sectionsHtml}
+          </div>
+
+          ${processorsHtml}
+          ${hintHtml}
+        </div>
+      `;
+    }
+
+    function renderCard(card){
+      if(card.showWhen && !card.showWhen()) return "";
+
+      const headChips = (card.chips || []).map(c => chip(c.label, c.value)).join("");
+      const groupsHtml = (card.groups || []).map(renderGroup).join("");
+
+      const disclosuresHtml = (card.disclosures || []).map(d => `
+        <div class="section">
+          <details>
+            <summary>${d.title}</summary>
+            <div class="content">${d.text}</div>
+          </details>
+        </div>
+      `).join("");
+
+      // Global card uses a single toggle; product cards use groups.
+      const isGlobalKyc = card.toggleKey && !card.groups;
+
+      const headRight = isGlobalKyc ? toggleButton(card.toggleKey, true) : `
+        <div class="toggleWrap">
+          <div class="status">${(card.groups||[]).some(g=>!g.locked) ? "Contains optional controls" : "Mandatory only"}</div>
+          <div style="display:flex;gap:8px;align-items:center;color:var(--muted);font-size:12px">
+            <span style="opacity:.85">Tap to review</span>
+          </div>
+        </div>
+      `;
+
+      // body for global KYC
+      let bodyHtml = "";
+      if(isGlobalKyc){
+        const sectionsHtml = card.sections.map(sec => {
+          if(sec.bullets){
+            return `
+              <div>
+                <div class="label">${sec.label}</div>
+                <ul>${sec.bullets.map(b => `<li>${b}</li>`).join("")}</ul>
+              </div>
+            `;
+          }
+          return `
+            <div>
+              <div class="label">${sec.label}</div>
+              <div class="small">${sec.text}</div>
+            </div>
+          `;
+        }).join("");
+
+        const processorsHtml = `
+          <div class="section">
+            <details>
+              <summary>Who processes this?</summary>
+              <div class="content">${card.processors.map(p => `• ${p}`).join("<br/>")}</div>
+            </details>
+          </div>
+        `;
+
+        bodyHtml = `
+          <div class="body" data-body="1" style="display:${card.defaultExpanded ? "block" : "none"}">
+            <div class="row section">${sectionsHtml}</div>
+            ${processorsHtml}
+          </div>
+        `;
+      } else {
+        bodyHtml = `
+          <div class="body" data-body="1" style="display:${card.defaultExpanded ? "block" : "none"}">
+            ${disclosuresHtml}
+            ${groupsHtml}
+          </div>
+        `;
+      }
+
+      return `
+        <article class="card" data-card="${card.id}">
+          <div class="cardhead">
+            <div class="cardtitle">
+              <div class="ico">${card.icon}</div>
+              <div style="min-width:0">
+                <h2>${card.title}</h2>
+                <div class="meta">${headChips}</div>
+              </div>
+            </div>
+            ${headRight}
+          </div>
+          ${bodyHtml}
+        </article>
+      `;
+    }
+
+    function render(){
+      cardsEl.innerHTML = cardsModel.map(renderCard).join("");
+      wireInteractions();
+      updateConditionalVisibility();
+    }
+
+    function wireInteractions(){
+      // Card expand/collapse by clicking header (except when clicking a toggle)
+      document.querySelectorAll(".card").forEach(cardEl => {
+        const head = cardEl.querySelector(".cardhead");
+        head.addEventListener("click", (e) => {
+          if(e.target.closest(".toggle")) return;
+          const body = cardEl.querySelector('.body[data-body="1"]');
+          if(!body) return;
+          const isOpen = body.style.display !== "none";
+          body.style.display = isOpen ? "none" : "block";
+        });
+      });
+
+      // Toggle switches
+      document.querySelectorAll(".toggle").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const key = btn.dataset.key;
+          const c = state.consents[key];
+          if(!c || c.locked) return;
+          c.enabled = !c.enabled;
+          btn.setAttribute("aria-checked", c.enabled ? "true" : "false");
+          btn.querySelector(".knob").style.transform = c.enabled ? "translateX(22px)" : "translateX(0px)";
+          btn.closest(".toggleWrap").querySelector(".status").textContent = c.enabled ? "ON" : "OFF";
+          showToast(`${labelFor(key)} set to ${c.enabled ? "ON" : "OFF"}`);
+          // In real integration: fire API event here
+          // emitConsentEvent({purposeId:key, status:c.enabled, ts:Date.now(), lang:"en"});
+        });
+      });
+    }
+
+    function labelFor(key){
+      const map = {
+        savings_insights: "Savings — Offers/Insights",
+        credit_profiling: "Credit — Profiling/Offers",
+      };
+      return map[key] || key;
+    }
+
+    // -----------------------------
+    // Bulk actions
+    // -----------------------------
+    function setAllOptional(enabled){
+      let changed = 0;
+      Object.entries(state.consents).forEach(([k,v])=>{
+        if(v.type === "optional" && !v.locked){
+          if(v.enabled !== enabled){
+            v.enabled = enabled;
+            changed++;
+          }
+        }
+      });
+      render(); // re-render to sync UI
+      showToast(`${enabled ? "Accepted" : "Denied"} all optional (${changed} updated)`);
+    }
+
+    document.getElementById("acceptAll").addEventListener("click", ()=> setAllOptional(true));
+    document.getElementById("denyAll").addEventListener("click", ()=> setAllOptional(false));
+
+    document.getElementById("expandAll").addEventListener("click", ()=>{
+      document.querySelectorAll('.body[data-body="1"]').forEach(b=> b.style.display = "block");
+      showToast("Expanded all cards");
+    });
+    document.getElementById("collapseAll").addEventListener("click", ()=>{
+      document.querySelectorAll('.body[data-body="1"]').forEach(b=> b.style.display = "none");
+      showToast("Collapsed all cards");
+    });
+
+    // -----------------------------
+    // Conditional visibility
+    // -----------------------------
+    function updateConditionalVisibility(){
+      // conditional group is already controlled at render time, but we keep this for future incremental updates.
+    }
+
+    // Demo keyboard shortcut: Press "C" to toggle default (collections card appears/disappears)
+    document.addEventListener("keydown", (e)=>{
+      if(e.key.toLowerCase() === "c"){
+        state.conditions.isInDefault = !state.conditions.isInDefault;
+        render();
+        showToast(`Default simulated: ${state.conditions.isInDefault ? "YES (Collections shown)" : "NO (Collections hidden)"}`);
+      }
+    });
+
+    // Initial render
+    render();
+  </script>
+</body>
+</html>
