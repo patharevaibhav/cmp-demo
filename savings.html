@@ -2,245 +2,607 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DPDP CMP — Savings Account Notice (Test)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DPDP CMP — Savings Account Notice (Product-Specific)</title>
 
+  <!-- Same CSS as your existing consolidated demo (keeps exact look & feel) -->
   <style>
     :root{
       --bg:#0b1220;
       --card:#111a2e;
       --card2:#0f172a;
-      --text:#e8eefc;
-      --muted:#b8c3e6;
-      --border:rgba(255,255,255,.10);
-      --accent:#6ea8fe;
-      --ok:#22c55e;
+      --text:#e6e9f2;
+      --muted:#a9b2c7;
+      --line:rgba(255,255,255,.10);
+      --chip:rgba(255,255,255,.09);
+      --good:#22c55e;
       --warn:#f59e0b;
+      --bad:#ef4444;
+      --accent:#60a5fa;
+      --accent2:#a78bfa;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:18px;
     }
+    *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: linear-gradient(180deg, var(--bg), #060b16);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(96,165,250,.25), transparent 55%),
+                  radial-gradient(1000px 500px at 90% 0%, rgba(167,139,250,.18), transparent 50%),
+                  var(--bg);
       color:var(--text);
     }
-    .wrap{max-width:920px; margin:0 auto; padding:24px 16px 56px;}
-    .topbar{
-      display:flex; gap:12px; align-items:center; justify-content:space-between;
-      padding:14px 16px; border:1px solid var(--border); background:rgba(17,26,46,.65);
-      border-radius:14px; backdrop-filter: blur(8px);
-      margin-bottom:18px;
+    a{color:var(--accent)}
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 18px 64px;
     }
-    .title h1{font-size:18px; margin:0;}
-    .title p{margin:4px 0 0; color:var(--muted); font-size:13px;}
-    .pill{
-      font-size:12px; color:var(--muted); border:1px solid var(--border);
-      padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.03);
-      white-space:nowrap;
-    }
-
-    .cmp-notice{
-      border:1px solid var(--border);
-      background: rgba(17,26,46,.7);
-      border-radius:16px;
-      padding:18px 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-    }
-    .cmp-notice h2{margin:0 0 8px; font-size:18px;}
-    .cmp-notice p{margin:0 0 12px; color:var(--muted); line-height:1.4;}
-    .section{
-      margin-top:14px;
-      padding-top:14px;
-      border-top:1px dashed rgba(255,255,255,.12);
-    }
-    .section h3{margin:0 0 8px; font-size:14px; color:var(--text);}
-
-    .cmp-purpose{
+    header{
       display:flex;
       align-items:flex-start;
-      gap:10px;
-      padding:12px;
-      border:1px solid var(--border);
-      border-radius:14px;
-      background: rgba(15,23,42,.55);
-      margin:10px 0;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:18px;
     }
-    .cmp-purpose label{display:block; font-weight:600; cursor:pointer;}
-    .purpose-note{margin:6px 0 0; color:var(--muted); font-size:12.5px;}
-    .badge{
-      display:inline-block;
-      font-size:11px;
-      padding:3px 8px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      margin-left:8px;
-      color:var(--muted);
+    .brand{display:flex;gap:12px;align-items:center;}
+    .logo{
+      width:44px;height:44px;border-radius:14px;
+      background: linear-gradient(135deg, rgba(96,165,250,.95), rgba(167,139,250,.95));
+      box-shadow: var(--shadow);
+      display:grid;place-items:center;
+      font-weight:800;letter-spacing:.5px;
     }
-    .badge.mand{border-color: rgba(34,197,94,.45); color:#bff7cf; background: rgba(34,197,94,.08);}
-    .badge.opt{border-color: rgba(110,168,254,.45); color:#d7e7ff; background: rgba(110,168,254,.08);}
+    h1{font-size: 18px;margin:0 0 6px;font-weight:800;}
+    .subtitle{
+      margin:0;color:var(--muted);font-size: 13px;line-height:1.4;max-width: 680px;
+    }
 
-    input[type="checkbox"]{
-      width:18px; height:18px; margin-top:2px;
-      accent-color: var(--accent);
-      cursor:pointer;
-    }
-    .mandatory input[type="checkbox"]{accent-color: var(--ok); cursor:not-allowed;}
-    .mandatory label{cursor:default;}
-
-    details{
-      border:1px solid var(--border);
-      border-radius:14px;
-      padding:10px 12px;
-      background: rgba(15,23,42,.35);
-      margin-top:12px;
-    }
-    summary{
-      cursor:pointer;
-      font-weight:600;
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;}
+    .btn{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
       color:var(--text);
-      list-style:none;
-    }
-    summary::-webkit-details-marker{display:none;}
-    .small{font-size:12.5px; color:var(--muted); line-height:1.45; margin-top:8px;}
-    ul{margin:8px 0 0 18px; color:var(--muted);}
-
-    .cmp-footer-note{
-      margin:12px 0 0;
-      font-size:12.5px;
-      color:var(--muted);
-    }
-    .cmp-submit{
-      margin-top:14px;
-      width:100%;
-      border:none;
-      background: linear-gradient(90deg, #4f8cff, #7aa9ff);
-      color:#071022;
-      font-weight:700;
-      padding:12px 14px;
-      border-radius:12px;
-      cursor:pointer;
-      transition: transform .05s ease;
-    }
-    .cmp-submit:active{transform: translateY(1px);}
-    .toast{
-      margin-top:12px;
       padding:10px 12px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background: rgba(34,197,94,.08);
-      color:#c9ffe0;
-      display:none;
+      border-radius: 14px;
+      cursor:pointer;
+      font-weight:650;
       font-size:13px;
+      transition: transform .05s ease, background .15s ease, border .15s ease;
+      user-select:none;
+    }
+    .btn:hover{background: rgba(255,255,255,.09)}
+    .btn:active{transform: translateY(1px)}
+    .btn.primary{border:1px solid rgba(96,165,250,.35);background: rgba(96,165,250,.18);}
+    .btn.danger{border:1px solid rgba(239,68,68,.35);background: rgba(239,68,68,.12);}
+
+    .pillrow{display:flex;flex-wrap:wrap;gap:8px;margin: 14px 0 18px;}
+    .pill{
+      background: var(--chip);
+      border:1px solid var(--line);
+      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .dot{width:8px;height:8px;border-radius:999px;background: rgba(255,255,255,.35);}
+    .dot.good{background: var(--good)}
+    .dot.warn{background: var(--warn)}
+    .dot.bad{background: var(--bad)}
+    .dot.accent{background: var(--accent)}
+    .grid{display:grid;grid-template-columns: 1fr;gap: 14px;}
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .cardhead{
+      padding: 14px 14px 12px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+    }
+    .cardtitle{display:flex;align-items:flex-start;gap: 10px;min-width: 0;}
+    .ico{
+      width: 34px;height:34px;border-radius: 12px;
+      background: rgba(255,255,255,.07);
+      border:1px solid var(--line);
+      display:grid;place-items:center;
+      flex: 0 0 auto;
+    }
+    .cardtitle h2{margin:0;font-size: 14px;font-weight: 850;line-height:1.2;}
+    .meta{margin-top: 6px;display:flex;gap: 8px;flex-wrap:wrap;align-items:center;}
+    .chip{
+      font-size: 12px;
+      color: var(--muted);
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      padding: 6px 8px;
+      border-radius: 999px;
+      display:inline-flex;
+      align-items:center;
+      gap: 6px;
+    }
+    .chip strong{color: var(--text); font-weight:750}
+    .toggleWrap{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex: 0 0 auto;}
+    .status{font-size: 11.5px;color: var(--muted);text-align:right;max-width: 260px;line-height:1.2;}
+    .toggle{
+      position:relative;width: 52px;height: 30px;border-radius: 999px;
+      border:1px solid var(--line);background: rgba(255,255,255,.08);
+      cursor:pointer;transition: background .15s ease, border .15s ease;outline:none;
+    }
+    .toggle[aria-checked="true"]{background: rgba(34,197,94,.24);border-color: rgba(34,197,94,.35);}
+    .toggle[disabled]{cursor:not-allowed;opacity:.65;filter:saturate(.7);}
+    .knob{
+      position:absolute;top: 3px;left: 3px;width: 24px;height: 24px;border-radius: 999px;
+      background: rgba(255,255,255,.85);transition: transform .15s ease;box-shadow: 0 6px 14px rgba(0,0,0,.25);
+    }
+    .toggle[aria-checked="true"] .knob{transform: translateX(22px);}
+
+    .body{padding: 0 14px 14px;border-top: 1px solid var(--line);background: rgba(15,23,42,.35);}
+    .section{padding: 12px 0;border-bottom: 1px dashed rgba(255,255,255,.10);}
+    .section:last-child{border-bottom:none}
+    .row{display:grid;grid-template-columns: 1fr;gap: 10px;}
+    @media (min-width: 760px){.row{grid-template-columns: 1fr 1fr;gap: 12px;}}
+    .label{color: var(--muted);font-size: 12px;margin-bottom: 6px;}
+    ul{margin: 0;padding-left: 16px;color: var(--text);font-size: 13px;line-height: 1.45;}
+    li{margin: 4px 0}
+    .small{font-size: 12.5px;color: var(--text);line-height: 1.45;}
+    details{border:1px solid var(--line);background: rgba(255,255,255,.05);border-radius: 14px;padding: 10px 12px;}
+    details summary{cursor:pointer;font-weight: 750;font-size: 13px;color: var(--text);list-style:none;}
+    details summary::-webkit-details-marker{display:none}
+    details .content{margin-top: 8px;color: var(--muted);font-size: 12.5px;line-height: 1.5;}
+    .subcard{border:1px solid var(--line);background: rgba(255,255,255,.045);border-radius: 16px;padding: 12px;margin-top: 12px;}
+    .subhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom: 8px;}
+    .subhead h3{margin:0;font-size: 13px;font-weight: 850;}
+    .submeta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+    .hint{color: var(--muted);font-size: 12px;line-height:1.4;margin-top: 8px;}
+    .footer{
+      margin-top: 18px;border:1px solid var(--line);background: rgba(255,255,255,.05);
+      border-radius: var(--radius);padding: 14px;
+    }
+    .footer h4{margin:0 0 8px;font-size: 13px;font-weight: 900;}
+    .footer .cols{display:grid;grid-template-columns: 1fr;gap: 12px;}
+    @media (min-width: 820px){.footer .cols{grid-template-columns: 1fr 1fr 1fr}}
+    .toast{
+      position: fixed;bottom: 16px;left: 50%;transform: translateX(-50%);
+      background: rgba(17,26,46,.94);border:1px solid var(--line);border-radius: 999px;
+      padding: 10px 14px;color: var(--text);box-shadow: var(--shadow);font-size: 12.5px;
+      opacity: 0;pointer-events:none;transition: opacity .18s ease, transform .18s ease;
+      display:flex;gap:10px;align-items:center;
+    }
+    .toast.show{opacity: 1;transform: translateX(-50%) translateY(-4px);}
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 11px;color: var(--muted);border:1px solid var(--line);padding: 2px 6px;
+      border-radius: 8px;background: rgba(255,255,255,.04);
     }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <div class="topbar">
-      <div class="title">
-        <h1>DPDP CMP — Savings Account Notice (Test)</h1>
-        <p>Testing layout, colors, toggles, and “non-overwhelming” UX.</p>
+    <header>
+      <div class="brand">
+        <div class="logo">DP</div>
+        <div>
+          <h1>Savings Account — Product Notice for Consent</h1>
+          <p class="subtitle">
+            Simple view first. Expand to see purposes, data categories, sharing, retention, and withdrawal impact.
+            Optional choices can be changed anytime.
+          </p>
+        </div>
       </div>
-      <span class="pill">Product Notice • Savings Account</span>
+
+      <div class="toolbar">
+        <button class="btn primary" id="acceptAll">Accept all optional</button>
+        <button class="btn danger" id="denyAll">Deny all optional</button>
+        <button class="btn" id="expandAll">Expand all</button>
+        <button class="btn" id="collapseAll">Collapse all</button>
+      </div>
+    </header>
+
+    <div class="pillrow">
+      <div class="pill"><span class="dot good"></span>Mandatory (locked)</div>
+      <div class="pill"><span class="dot accent"></span>Optional (toggle)</div>
+      <div class="pill"><span class="dot"></span><span>Demo: Press</span> <span class="kbd">S</span> <span>to simulate “Savings-only customer”</span></div>
     </div>
 
-    <!-- SAVINGS NOTICE (CMP-READY) -->
-    <div class="cmp-notice" data-product="savings-account">
-      <h2>Savings Account – Data Use & Consent</h2>
-      <p>
-        We use your personal data to open and operate your Savings Account, keep it secure,
-        and meet legal requirements. Optional choices help us improve services and share offers if you want.
-      </p>
+    <main class="grid" id="cards"></main>
 
-      <div class="section">
-        <h3>Consent choices</h3>
-
-        <!-- Mandatory -->
-        <div class="cmp-purpose mandatory">
-          <input type="checkbox" checked disabled />
-          <div>
-            <label>
-              Account operation, transactions, security, and legal compliance
-              <span class="badge mand">Mandatory</span>
-            </label>
-            <p class="purpose-note">
-              Needed to provide the account and comply with banking / financial laws. This is locked.
-            </p>
-          </div>
+    <section class="footer" id="globalFooter">
+      <h4>Your Rights</h4>
+      <div class="cols">
+        <div class="small">
+          <div class="label">Rights available</div>
+          <ul>
+            <li>Access and review your personal data</li>
+            <li>Correct inaccurate data</li>
+            <li>Withdraw optional consent at any time</li>
+            <li>Request erasure, where applicable</li>
+            <li>Grievance redressal</li>
+          </ul>
         </div>
-
-        <!-- Optional -->
-        <div class="cmp-purpose optional">
-          <input type="checkbox" data-purpose-id="SA_MKTG" />
-          <div>
-            <label>
-              Receive offers and promotional messages
-              <span class="badge opt">Optional</span>
-            </label>
-            <p class="purpose-note">You can switch this off anytime. Core services won’t be affected.</p>
-          </div>
+        <div class="small">
+          <div class="label">How to withdraw consent</div>
+          You can withdraw optional consents anytime from <strong>Profile → Privacy Settings</strong>.
+          Withdrawal is as easy as giving consent. Processing linked to withdrawn consent will stop going forward.
         </div>
-
-        <!-- Optional -->
-        <div class="cmp-purpose optional">
-          <input type="checkbox" data-purpose-id="SA_ANALYTICS" />
-          <div>
-            <label>
-              Use data for non-essential service improvement analytics
-              <span class="badge opt">Optional</span>
-            </label>
-            <p class="purpose-note">Helps improve app experience and service quality.</p>
-          </div>
+        <div class="small">
+          <div class="label">Grievance & contact</div>
+          <strong>Data Protection Officer:</strong> <em>[email / phone placeholder]</em><br/>
+          <span style="color:var(--muted)">You will receive an acknowledgement and reference number for tracking.</span>
         </div>
-
-        <details>
-          <summary>More details (what data, retention, withdrawal)</summary>
-          <div class="small">
-            <b>Data used:</b>
-            <ul>
-              <li>Identity & KYC details (e.g., PAN; Aadhaar only where permitted)</li>
-              <li>Contact details (mobile/email/address)</li>
-              <li>Account & transaction data</li>
-              <li>Compliance & audit records</li>
-              <li>Digital banking logs (if enabled)</li>
-            </ul>
-
-            <p class="small">
-              <b>Retention:</b> We keep data while your account is active and thereafter as required by
-              applicable banking/financial laws. After that, data is archived, anonymised, or deleted as per policy.
-            </p>
-
-            <p class="small">
-              <b>Withdrawal:</b> You can withdraw optional consent anytime (as easily as giving consent).
-              Mandatory processing cannot be withdrawn where required for account operation or law.
-            </p>
-
-            <p class="small">
-              <b>Your rights:</b> View consent history, update/withdraw optional consent, request support and raise grievances via the institution’s published channel / DPO.
-            </p>
-          </div>
-        </details>
-
-        <p class="cmp-footer-note">
-          Tip: Optional consent can be changed later from Profile → Privacy Settings.
-        </p>
-
-        <button class="cmp-submit" id="saveBtn">Save Preferences</button>
-        <div class="toast" id="toast">Saved. Your optional choices have been updated.</div>
       </div>
-    </div>
+    </section>
   </div>
 
-  <script>
-    const saveBtn = document.getElementById("saveBtn");
-    const toast = document.getElementById("toast");
+  <div class="toast" id="toast"><span class="dot accent"></span><span id="toastText">Updated.</span></div>
 
-    saveBtn.addEventListener("click", () => {
-      // In real CMP, you'd persist these values and generate a consent artifact.
-      // For test: just show a success state.
-      toast.style.display = "block";
-      setTimeout(() => toast.style.display = "none", 2200);
+  <script>
+    // -----------------------------
+    // Savings-only model (DPDP/BRD structured)
+    // -----------------------------
+    const state = {
+      holdings: { savings: true },
+      consents: {
+        // Savings: mandatory + optional groups
+        savings_core: { type: "mandatory", enabled: true, locked: true },
+        savings_comms: { type: "mandatory", enabled: true, locked: true },
+
+        // Optional: keep it minimal and non-overwhelming, but DPDP-complete in expanded view
+        savings_marketing: { type: "optional", enabled: false, locked: false },
+        savings_analytics: { type: "optional", enabled: false, locked: false },
+      }
+    };
+
+    const cardsModel = [
+      {
+        id: "savings",
+        icon: "🏦",
+        title: "Savings Account",
+        chips: [
+          { label: "Account ID", value: "SB •••• 4821" }
+        ],
+        showWhen: () => state.holdings.savings,
+        groups: [
+          {
+            groupId: "savings_core",
+            heading: "Core account operation (Locked)",
+            statusText: "Mandatory (locked)",
+            toggleKey: "savings_core",
+            locked: true,
+            sections: [
+              { label: "Purpose", bullets: [
+                "Open and maintain your account; process deposits/withdrawals/transfers",
+                "Meet legal and regulatory obligations (KYC/AML/audit where applicable)",
+                "Detect fraud and secure your account and channels"
+              ]},
+              { label: "Data we will use", bullets: [
+                "Identity & KYC details (PAN; Aadhaar only where permitted)",
+                "Contact details",
+                "Account details and transaction records",
+                "Compliance and audit logs",
+                "Digital banking/session logs (if enabled)"
+              ]},
+              { label: "Retention", text:
+                "<strong>Minimum:</strong> While your account is active<br/>" +
+                "<strong>Maximum:</strong> As required by applicable banking/financial laws and regulators<br/>" +
+                "<strong>Expiry:</strong> After closure, retained per statutory timelines, then archived/anonymised/deleted as per policy"
+              }
+            ],
+            processors: [
+              "The Financial Institution (Data Fiduciary)",
+              "Authorised service providers (core banking, hosting, security) under safeguards",
+              "Regulators/authorities where required by law"
+            ]
+          },
+
+          {
+            groupId: "savings_comms",
+            heading: "Statements & essential alerts (Locked)",
+            statusText: "Mandatory (locked)",
+            toggleKey: "savings_comms",
+            locked: true,
+            sections: [
+              { label: "Purpose", bullets: [
+                "Send statements, transaction alerts, and service notifications",
+                "Support account servicing and grievance communications"
+              ]},
+              { label: "Data we will use", bullets: [
+                "Contact details (mobile/email)",
+                "Account and transaction references"
+              ]},
+              { label: "Retention", text:
+                "<strong>Minimum:</strong> While you use the service<br/>" +
+                "<strong>Maximum:</strong> As required by law/audit needs<br/>" +
+                "<strong>Expiry:</strong> As per statutory timelines after closure"
+              }
+            ],
+            processors: [
+              "Messaging/email providers (as authorised processors)",
+              "Bank servicing systems"
+            ]
+          },
+
+          {
+            groupId: "savings_marketing",
+            heading: "Offers & promotions",
+            statusText: "Optional (toggle)",
+            toggleKey: "savings_marketing",
+            locked: false,
+            hint: "If you turn this off, we will stop using your data for marketing going forward. Core services are not affected.",
+            sections: [
+              { label: "Purpose", bullets: [
+                "Send product offers and promotional communications"
+              ]},
+              { label: "Data we will use", bullets: [
+                "Basic profile and account relationship signals (no sensitive data for targeting)"
+              ]},
+              { label: "Retention", text:
+                "<strong>Minimum:</strong> While consent is active<br/>" +
+                "<strong>Maximum:</strong> As per internal policy<br/>" +
+                "<strong>Expiry:</strong> On withdrawal (processing stops going forward)"
+              }
+            ],
+            processors: [
+              "CRM/communication tools (authorised processors)"
+            ]
+          },
+
+          {
+            groupId: "savings_analytics",
+            heading: "Non-essential service improvement analytics",
+            statusText: "Optional (toggle)",
+            toggleKey: "savings_analytics",
+            locked: false,
+            hint: "Used only to improve experience. You can withdraw anytime.",
+            sections: [
+              { label: "Purpose", bullets: [
+                "Improve app experience and service quality (non-essential analytics)"
+              ]},
+              { label: "Data we will use", bullets: [
+                "Usage signals (e.g., feature usage, error logs) and high-level patterns"
+              ]},
+              { label: "Retention", text:
+                "<strong>Minimum:</strong> While consent is active<br/>" +
+                "<strong>Maximum:</strong> As per internal policy<br/>" +
+                "<strong>Expiry:</strong> On withdrawal or account closure"
+              }
+            ],
+            processors: [
+              "Authorised analytics tooling (if used) under safeguards"
+            ]
+          }
+        ],
+        disclosures: [
+          {
+            title: "Automated checks (fraud & security)",
+            text: "We may use automated checks for fraud detection, suspicious activity monitoring, and security controls. Profiling for marketing offers is only done if you opt-in to Offers & promotions."
+          }
+        ],
+        defaultExpanded: false
+      }
+    ];
+
+    // -----------------------------
+    // UI rendering (same patterns as your index)
+    // -----------------------------
+    const cardsEl = document.getElementById("cards");
+    const toastEl = document.getElementById("toast");
+    const toastText = document.getElementById("toastText");
+
+    function showToast(msg){
+      toastText.textContent = msg;
+      toastEl.classList.add("show");
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(()=> toastEl.classList.remove("show"), 1500);
+    }
+
+    function chip(label, value){
+      return `<span class="chip"><span style="opacity:.8">${label}:</span> <strong>${value}</strong></span>`;
+    }
+
+    function toggleButton(consentKey, lockedOverride){
+      const c = state.consents[consentKey];
+      const locked = lockedOverride ?? c.locked;
+      const enabled = !!c.enabled;
+      const disabled = locked;
+      const status = locked ? "Locked ON (mandatory)" : (enabled ? "ON" : "OFF");
+      return `
+        <div class="toggleWrap">
+          <div class="status">${status}</div>
+          <button class="toggle" role="switch" aria-checked="${enabled}" data-key="${consentKey}" ${disabled ? "disabled" : ""} aria-label="${consentKey}">
+            <span class="knob"></span>
+          </button>
+        </div>
+      `;
+    }
+
+    function renderGroup(group){
+      const isConditional = !!group.conditional;
+      const visible = isConditional ? group.visibleWhen() : true;
+      if(!visible) return "";
+
+      const statusChip = group.locked
+        ? chip("Status","Mandatory (locked)")
+        : chip("Status","Optional (toggle)");
+
+      const headRight = toggleButton(group.toggleKey, group.locked);
+
+      const sectionsHtml = group.sections.map(sec => {
+        if(sec.bullets){
+          return `
+            <div>
+              <div class="label">${sec.label}</div>
+              <ul>${sec.bullets.map(b => `<li>${b}</li>`).join("")}</ul>
+            </div>
+          `;
+        }
+        return `
+          <div>
+            <div class="label">${sec.label}</div>
+            <div class="small">${sec.text}</div>
+          </div>
+        `;
+      }).join("");
+
+      const processorsHtml = (group.processors && group.processors.length)
+        ? `
+          <div class="section">
+            <details>
+              <summary>Who processes this?</summary>
+              <div class="content">${group.processors.map(p => `• ${p}`).join("<br/>")}</div>
+            </details>
+          </div>
+        `
+        : "";
+
+      const hintHtml = group.hint ? `<div class="hint">${group.hint}</div>` : "";
+
+      return `
+        <div class="subcard" data-group="${group.groupId}">
+          <div class="subhead">
+            <div>
+              <h3>${group.heading}</h3>
+              <div class="submeta">${statusChip}</div>
+            </div>
+            ${headRight}
+          </div>
+
+          <div class="row section">
+            ${sectionsHtml}
+          </div>
+
+          ${processorsHtml}
+          ${hintHtml}
+        </div>
+      `;
+    }
+
+    function renderCard(card){
+      if(card.showWhen && !card.showWhen()) return "";
+
+      const headChips = (card.chips || []).map(c => chip(c.label, c.value)).join("");
+      const groupsHtml = (card.groups || []).map(renderGroup).join("");
+      const disclosuresHtml = (card.disclosures || []).map(d => `
+        <div class="section">
+          <details>
+            <summary>${d.title}</summary>
+            <div class="content">${d.text}</div>
+          </details>
+        </div>
+      `).join("");
+
+      const headRight = `
+        <div class="toggleWrap">
+          <div class="status">${(card.groups||[]).some(g=>!g.locked) ? "Contains optional controls" : "Mandatory only"}</div>
+          <div style="display:flex;gap:8px;align-items:center;color:var(--muted);font-size:12px">
+            <span style="opacity:.85">Tap to review</span>
+          </div>
+        </div>
+      `;
+
+      return `
+        <article class="card" data-card="${card.id}">
+          <div class="cardhead">
+            <div class="cardtitle">
+              <div class="ico">${card.icon}</div>
+              <div style="min-width:0">
+                <h2>${card.title}</h2>
+                <div class="meta">${headChips}</div>
+              </div>
+            </div>
+            ${headRight}
+          </div>
+
+          <div class="body" data-body="1" style="display:${card.defaultExpanded ? "block" : "none"}">
+            ${disclosuresHtml}
+            ${groupsHtml}
+          </div>
+        </article>
+      `;
+    }
+
+    function wireInteractions(){
+      document.querySelectorAll(".card").forEach(cardEl => {
+        const head = cardEl.querySelector(".cardhead");
+        head.addEventListener("click", (e) => {
+          if(e.target.closest(".toggle")) return;
+          const body = cardEl.querySelector('.body[data-body="1"]');
+          if(!body) return;
+          const isOpen = body.style.display !== "none";
+          body.style.display = isOpen ? "none" : "block";
+        });
+      });
+
+      document.querySelectorAll(".toggle").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const key = btn.dataset.key;
+          const c = state.consents[key];
+          if(!c || c.locked) return;
+          c.enabled = !c.enabled;
+          btn.setAttribute("aria-checked", c.enabled ? "true" : "false");
+          btn.closest(".toggleWrap").querySelector(".status").textContent = c.enabled ? "ON" : "OFF";
+          showToast(`${labelFor(key)} set to ${c.enabled ? "ON" : "OFF"}`);
+        });
+      });
+    }
+
+    function labelFor(key){
+      const map = {
+        savings_marketing: "Savings — Offers & promotions",
+        savings_analytics: "Savings — Service improvement analytics",
+      };
+      return map[key] || key;
+    }
+
+    function setAllOptional(enabled){
+      let changed = 0;
+      Object.entries(state.consents).forEach(([k,v])=>{
+        if(v.type === "optional" && !v.locked){
+          if(v.enabled !== enabled){
+            v.enabled = enabled;
+            changed++;
+          }
+        }
+      });
+      render();
+      showToast(`${enabled ? "Accepted" : "Denied"} all optional (${changed} updated)`);
+    }
+
+    document.getElementById("acceptAll").addEventListener("click", ()=> setAllOptional(true));
+    document.getElementById("denyAll").addEventListener("click", ()=> setAllOptional(false));
+    document.getElementById("expandAll").addEventListener("click", ()=>{
+      document.querySelectorAll('.body[data-body="1"]').forEach(b=> b.style.display = "block");
+      showToast("Expanded all cards");
     });
+    document.getElementById("collapseAll").addEventListener("click", ()=>{
+      document.querySelectorAll('.body[data-body="1"]').forEach(b=> b.style.display = "none");
+      showToast("Collapsed all cards");
+    });
+
+    // Demo: Press S to toggle whether customer holds savings (for future multi-product patterns)
+    document.addEventListener("keydown", (e)=>{
+      if(e.key.toLowerCase() === "s"){
+        state.holdings.savings = !state.holdings.savings;
+        render();
+        showToast(`Savings holding: ${state.holdings.savings ? "YES" : "NO"}`);
+      }
+    });
+
+    function render(){
+      cardsEl.innerHTML = cardsModel.map(renderCard).join("");
+      wireInteractions();
+    }
+
+    render();
   </script>
 </body>
 </html>
