@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DPDP CMP — Credit/Debit Cards Notice</title>
+
+  <style>
+    :root{
+      --bg:#0b1220;
+      --text:#e6e9f2;
+      --muted:#a9b2c7;
+      --line:rgba(255,255,255,.10);
+      --chip:rgba(255,255,255,.09);
+      --good:#22c55e;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+      --accent:#60a5fa;
+      --accent2:#a78bfa;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans";
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(96,165,250,.25), transparent 55%),
+                  radial-gradient(1000px 500px at 90% 0%, rgba(167,139,250,.18), transparent 50%),
+                  var(--bg);
+      color:var(--text);
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:980px;margin:0 auto;padding:28px 18px 64px;}
+    header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px;}
+    .brand{display:flex;gap:12px;align-items:center;}
+    .logo{
+      width:44px;height:44px;border-radius:14px;
+      background: linear-gradient(135deg, rgba(96,165,250,.95), rgba(167,139,250,.95));
+      box-shadow: var(--shadow);
+      display:grid;place-items:center;
+      font-weight:800;letter-spacing:.5px;
+    }
+    h1{font-size:18px;margin:0 0 6px;font-weight:800;}
+    .subtitle{margin:0;color:var(--muted);font-size:13px;line-height:1.4;max-width:760px;}
+
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;}
+    .btn{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:650;
+      font-size:13px;
+      transition: transform .05s ease, background .15s ease, border .15s ease;
+      user-select:none;
+    }
+    .btn:hover{background: rgba(255,255,255,.09)}
+    .btn:active{transform: translateY(1px)}
+    .btn.primary{border:1px solid rgba(96,165,250,.35);background: rgba(96,165,250,.18);}
+    .btn.danger{border:1px solid rgba(239,68,68,.35);background: rgba(239,68,68,.12);}
+
+    .pillrow{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 18px;}
+    .pill{
+      background: var(--chip);
+      border:1px solid var(--line);
+      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      display:flex;align-items:center;gap:8px;
+    }
+    .dot{width:8px;height:8px;border-radius:999px;background: rgba(255,255,255,.35);}
+    .dot.good{background: var(--good)}
+    .dot.accent{background: var(--accent)}
+    .dot.warn{background: var(--warn)}
+
+    .grid{display:grid;grid-template-columns:1fr;gap:14px;}
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .cardhead{
+      padding:14px 14px 12px;
+      display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+      cursor:pointer;
+    }
+    .cardtitle{display:flex;align-items:flex-start;gap:10px;min-width:0;}
+    .ico{
+      width:34px;height:34px;border-radius:12px;
+      background: rgba(255,255,255,.07);
+      border:1px solid var(--line);
+      display:grid;place-items:center;
+      flex:0 0 auto;
+    }
+    .cardtitle h2{margin:0;font-size:14px;font-weight:850;line-height:1.2;}
+    .meta{margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+    .chip{
+      font-size:12px;color: var(--muted);
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      padding:6px 8px;border-radius:999px;
+      display:inline-flex;align-items:center;gap:6px;
+    }
+    .chip strong{color: var(--text); font-weight:750}
+
+    .toggleWrap{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex:0 0 auto;}
+    .status{font-size:11.5px;color: var(--muted);text-align:right;max-width:260px;line-height:1.2;}
+
+    .toggle{
+      position:relative;width:52px;height:30px;border-radius:999px;
+      border:1px solid var(--line);background: rgba(255,255,255,.08);
+      cursor:pointer;transition: background .15s ease, border .15s ease;outline:none;
+    }
+    .toggle[aria-checked="true"]{background: rgba(34,197,94,.24);border-color: rgba(34,197,94,.35);}
+    .toggle[disabled]{cursor:not-allowed;opacity:.65;filter:saturate(.7);}
+    .knob{
+      position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:999px;
+      background: rgba(255,255,255,.85);transition: transform .15s ease;
+      box-shadow: 0 6px 14px rgba(0,0,0,.25);
+    }
+    .toggle[aria-checked="true"] .knob{transform: translateX(22px);}
+
+    .body{
+      padding: 0 14px 14px;
+      border-top: 1px solid var(--line);
+      background: rgba(15,23,42,.35);
+      display:none;
+    }
+
+    .subcard{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.045);
+      border-radius:16px;
+      padding:12px;
+      margin-top:12px;
+    }
+    .subhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;}
+    .subhead h3{margin:0;font-size:13px;font-weight:850;}
+    .submeta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+    .hint{color: var(--muted);font-size:12px;line-height:1.4;margin-top:8px;}
+
+    .row{display:grid;grid-template-columns:1fr;gap:10px;}
+    @media (min-width: 760px){.row{grid-template-columns:1fr 1fr;gap:12px;}}
+    .label{color: var(--muted);font-size:12px;margin-bottom:6px;}
+    ul{margin:0;padding-left:16px;color: var(--text);font-size:13px;line-height:1.45;}
+    li{margin:4px 0}
+    .small{font-size:12.5px;color: var(--text);line-height:1.45;}
+
+    details{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      border-radius:14px;
+      padding:10px 12px;
+      margin-top:10px;
+    }
+    details summary{
+      cursor:pointer;font-weight:750;font-size:13px;color: var(--text);
+      list-style:none;display:flex;justify-content:space-between;gap:10px;align-items:center;
+    }
+    details summary::-webkit-details-marker{display:none}
+    .chev{color: var(--muted);font-size:12px}
+    details .content{margin-top:10px;color: var(--muted);font-size:12.5px;line-height:1.55;}
+
+    .footer{
+      margin-top:18px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      border-radius: var(--radius);
+      padding:14px;
+    }
+    .footer h4{margin:0 0 8px;font-size:13px;font-weight:900;}
+    .footer .cols{display:grid;grid-template-columns:1fr;gap:12px;}
+    @media (min-width: 820px){.footer .cols{grid-template-columns:1fr 1fr 1fr}}
+
+    .inlinebar{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+      margin-top:10px;
+      color:var(--muted);
+      font-size:12.5px;
+    }
+    .select{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 8px 10px;
+      font-size: 12.5px;
+      outline: none;
+    }
+    .toast{
+      position: fixed;bottom: 16px;left: 50%;transform: translateX(-50%);
+      background: rgba(17,26,46,.94);
+      border:1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 14px;
+      color: var(--text);
+      box-shadow: var(--shadow);
+      font-size: 12.5px;
+      opacity: 0;pointer-events:none;
+      transition: opacity .18s ease, transform .18s ease;
+      display:flex;gap:10px;align-items:center;
+    }
+    .toast.show{opacity: 1;transform: translateX(-50%) translateY(-4px);}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">DP</div>
+        <div>
+          <h1>Credit Cards / Debit Cards — Product Notice for Consent</h1>
+          <p class="subtitle">
+            Covers card issuance, usage, transaction processing, fraud/security controls, statements, and servicing. Optional choices are separate and can be changed anytime.
+          </p>
+
+          <div class="inlinebar">
+            <span><strong>Data Fiduciary:</strong> <em>[Legal Name Placeholder]</em></span>
+            <span>•</span>
+            <span><strong>Notice:</strong> <em>CARDS_NOTICE</em> • <strong>Version:</strong> <em>v1.0</em> • <strong>Effective:</strong> <em>[DD-MMM-YYYY]</em></span>
+            <span>•</span>
+
+            <label for="lang" style="color:var(--muted)"><strong>Language:</strong></label>
+            <select id="lang" class="select" aria-label="Language selector">
+              <option value="en" selected>English</option>
+              <option value="hi">हिंदी (Placeholder)</option>
+              <option value="mr">मराठी (Placeholder)</option>
+              <option value="ta">தமிழ் (Placeholder)</option>
+              <option value="bn">বাংলা (Placeholder)</option>
+            </select>
+
+            <span>•</span>
+            <a href="#" aria-label="Privacy policy link">Privacy Policy</a>
+            <span>•</span>
+            <a href="#" aria-label="Retention policy link">Retention Policy</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <button class="btn primary" id="acceptAll">Accept all optional</button>
+        <button class="btn danger" id="denyAll">Deny all optional</button>
+        <button class="btn" id="expandAll">Expand all</button>
+        <button class="btn" id="collapseAll">Collapse all</button>
+      </div>
+    </header>
+
+    <div class="pillrow">
+      <div class="pill"><span class="dot good"></span>Mandatory (locked)</div>
+      <div class="pill"><span class="dot accent"></span>Optional (toggle)</div>
+      <div class="pill"><span class="dot warn"></span>Details available (no extra steps to consent)</div>
+    </div>
+
+    <main class="grid" id="cards">
+      <article class="card" data-card="cards">
+        <div class="cardhead" data-action="toggle-card">
+          <div class="cardtitle">
+            <div class="ico">💳</div>
+            <div style="min-width:0">
+              <h2>Cards (Credit / Debit)</h2>
+              <div class="meta">
+                <span class="chip"><span style="opacity:.8">Card:</span> <strong>•••• 5521</strong></span>
+                <span class="chip"><span style="opacity:.8">Network:</span> <strong>[Visa/Mastercard/RuPay]</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="toggleWrap">
+            <div class="status">Contains optional controls</div>
+            <div style="display:flex;gap:8px;align-items:center;color:var(--muted);font-size:12px">
+              <span style="opacity:.85">Tap to review</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="body" data-body="1">
+
+          <details style="margin-top:12px;">
+            <summary>Consent record & audit trail <span class="chev">Click to expand</span></summary>
+            <div class="content">
+              A secure record of your choices is maintained, including <strong>purpose</strong>, <strong>timestamp</strong>, and <strong>notice version</strong>.
+              You may request a copy of your consent record. Optional consents are recorded and enforced separately per purpose.
+            </div>
+          </details>
+
+          <details style="margin-top:12px;">
+            <summary>Cross-border transfers (if applicable) <span class="chev">Click to expand</span></summary>
+            <div class="content">
+              Some card networks, merchant processors, or authorised service providers may process transaction data outside India.
+              If applicable, we will disclose this in the Privacy Policy and ensure applicable safeguards.
+              <em>[Platform note: show this only when cross-border processing applies.]</em>
+            </div>
+          </details>
+
+          <details style="margin-top:12px;">
+            <summary>Tokenisation & device-based payments (as applicable) <span class="chev">Click to expand</span></summary>
+            <div class="content">
+              If you enable tokenisation (e.g., for card-on-file or mobile wallets), a token may be created and used for transactions. Tokenisation can be disabled from card settings where available.
+            </div>
+          </details>
+
+          <!-- GROUP 1: CORE CARD PROCESSING (MANDATORY) -->
+          <div class="subcard" data-group="cards_core" data-purpose="CARDS_CORE">
+            <div class="subhead">
+              <div>
+                <h3>Card issuance, transactions, compliance & security</h3>
+                <div class="submeta">
+                  <span class="chip"><span style="opacity:.8">Status:</span> <strong>Mandatory (locked)</strong></span>
+                </div>
+              </div>
+
+              <div class="toggleWrap">
+                <div class="status">Locked ON (mandatory)</div>
+                <button class="toggle" role="switch" aria-checked="true" data-key="cards_core" disabled>
+                  <span class="knob"></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <div class="label">Purpose</div>
+                <ul>
+                  <li>Issue and manage your card; verify identity and eligibility (where applicable)</li>
+                  <li>Authorise and process transactions (online, POS, ATM) and settle payments</li>
+                  <li>Run fraud prevention, risk controls, chargeback/dispute handling</li>
+                  <li>Meet legal/regulatory obligations and maintain audit trails</li>
+                </ul>
+              </div>
+              <div>
+                <div class="label">Withdrawal impact</div>
+                <div class="small">
+                  Mandatory processing is required to operate the card and process transactions.
+                  If you close the card/account, active processing stops except what we must retain by law and for dispute resolution.
+                </div>
+              </div>
+            </div>
+
+            <details>
+              <summary>Details (data used, sharing, retention, processors) <span class="chev">Click to expand</span></summary>
+              <div class="content">
+                <div style="margin-bottom:10px;">
+                  <div class="label">Data we will use (examples)</div>
+                  <ul>
+                    <li>Identity & KYC (name, DOB, PAN; Aadhaar only where permitted)</li>
+                    <li>Card identifiers (masked PAN, card reference, expiry month/year; CVV is not stored)</li>
+                    <li>Transaction data (merchant, amount, date/time, location/country, MCC/category where available)</li>
+                    <li>Authentication data (OTP, device binding, tokenisation references where applicable)</li>
+                    <li>Risk/fraud signals (velocity checks, unusual patterns, security events)</li>
+                    <li>Disputes/chargebacks (claims, evidence, resolution logs)</li>
+                    <li>Digital session logs (device ID/IP/login timestamps — if enabled)</li>
+                  </ul>
+                </div>
+
+                <div style="margin-bottom:10px;">
+                  <div class="label">Processors (acting on our instructions)</div>
+                  <ul>
+                    <li>Card processors, card management systems, hosting/security providers under safeguards</li>
+                    <li>SMS/email delivery providers for OTP/alerts</li>
+                    <li>Fraud/risk monitoring partners (for security controls)</li>
+                  </ul>
+
+                  <div class="label" style="margin-top:10px;">Disclosures / shared parties (transaction ecosystem)</div>
+                  <ul>
+                    <li>Card networks (e.g., Visa/Mastercard/RuPay) for authorisation and settlement</li>
+                    <li>Merchants, acquirers, payment gateways for transaction completion</li>
+                    <li>Regulators / authorities where required by law</li>
+                  </ul>
+                </div>
+
+                <div style="margin-bottom:10px;">
+                  <div class="label">Retention</div>
+                  <div class="small">
+                    <strong>Minimum:</strong> While the card/account is active<br/>
+                    <strong>Typical (banking reference):</strong> <em>[e.g., 5–10 years after closure — configurable]</em><br/>
+                    <strong>Maximum:</strong> As required by applicable laws/regulators and for dispute/chargeback timelines<br/>
+                    <strong>Expiry:</strong> After closure, retained per statutory and dispute timelines, then archived/anonymised/deleted as per policy.
+                    See <a href="#" aria-label="Retention policy reference">Retention Policy</a>.
+                  </div>
+                </div>
+
+                <div class="hint">
+                  Mandatory processing is needed for card operations and transaction integrity; it is not bundled with optional purposes.
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- GROUP 2: ESSENTIAL COMMS (MANDATORY) -->
+          <div class="subcard" data-group="cards_comms" data-purpose="CARDS_ESSENTIAL_ALERTS">
+            <div class="subhead">
+              <div>
+                <h3>Statements & essential alerts</h3>
+                <div class="submeta">
+                  <span class="chip"><span style="opacity:.8">Status:</span> <strong>Mandatory (locked)</strong></span>
+                </div>
+              </div>
+
+              <div class="toggleWrap">
+                <div class="status">Locked ON (mandatory)</div>
+                <button class="toggle" role="switch" aria-checked="true" data-key="cards_comms" disabled>
+                  <span class="knob"></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <div class="label">Purpose</div>
+                <ul>
+                  <li>Send transaction alerts (including OTP), statements, due reminders (credit cards), and security notifications</li>
+                  <li>Support servicing and grievance communications</li>
+                </ul>
+              </div>
+              <div>
+                <div class="label">Withdrawal impact</div>
+                <div class="small">Mandatory servicing and security communication cannot be disabled.</div>
+              </div>
+            </div>
+
+            <details>
+              <summary>Details (data used, sharing, retention, processors) <span class="chev">Click to expand</span></summary>
+              <div class="content">
+                <div style="margin-bottom:10px;">
+                  <div class="label">Data we will use (examples)</div>
+                  <ul>
+                    <li>Contact (mobile/email)</li>
+                    <li>Card/transaction references (masked card, amount, time)</li>
+                  </ul>
+                </div>
+
+                <div style="margin-bottom:10px;">
+                  <div class="label">Processors (acting on our instructions)</div>
+                  <ul>
+                    <li>SMS/email delivery providers (authorised processors)</li>
+                    <li>Card servicing systems</li>
+                  </ul>
+                </div>
+
+                <div style="margin-bottom:10px;">
+                  <div class="label">Retention</div>
+                  <div class="small">
+                    <strong>Minimum:</strong> While you use the service<br/>
+                    <strong>Maximum:</strong> As required for audit/disputes under applicable laws<br/>
+                    <strong>Expiry:</strong> As per statutory timelines after closure. See <a href="#" aria-label="Retention policy reference">Retention Policy</a>.
+                  </div>
+                </div>
+
+                <div class="hint">
+                  This purpose is recorded and enforced independently for auditability.
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- GROUP 3: CARD CONTROLS (OPTIONAL) -->
+          <div class="subcard" data-group="cards_controls" data-purpose="CARDS_OPTIONAL_CONTROLS">
+            <div class="subhead">
+              <div>
+                <h3>Optional convenience features (controls & insights)</h3>
+                <div class="submeta">
+                  <span class="chip"><span style="opacity:.8">Status:</span> <strong>Optional (toggle)</strong></span>
+                </div>
+              </div>
+
+              <div class="toggleWrap">
+                <div class="status" data-status="cards_controls">OFF</div>
+                <button class="toggle" role="switch" aria-checked="false" data-key="cards_controls">
+                  <span class="knob"></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <div class="label">Purpose</div>
+                <ul>
+                  <li>Provide spend insights, category summaries, and personalised controls (where enabled)</li>
+                </ul>
+              </div>
+              <div>
+                <div class="label">Withdrawal impact</div>
+                <div class="small">
+                  You can withdraw anytime. Core card services are not affected.
+                  Processing linked to withdrawn consent stops going forward.
+                </div>
+              </div>
+            </div>
+
+            <details>
+              <summary>Details (data used, sharing, retention, processors) <span class="chev">Click to expand</span></summary>
+              <div class="content">
+                <div style="margin-bottom:10px;">
+                  <div class="label">Data we will use (examples)</div>
+                  <ul>
+                    <li>Aggregated spend patterns and category-level summaries</li>
+                    <li>Usage signals for feature improvement (non-essential)</li>
+                  </ul>
+                </div>
+
+                <div style="margin-bottom:10px;">
+                  <div class="label">Processors (acting on our instructions)</div>
+                  <ul>
+                    <li>Authorised analytics tooling (if used) under safeguards</li>
+                  </ul>
+                </div>
+
+                <div style="margin-bottom:10px;">
+                  <div class="label">Retention</div>
+                  <div class="small">
+                    <strong>Minimum:</strong> While consent is active<br/>
+                    <strong>Maximum:</strong> As per internal policy<br/>
+                    <strong>Expiry:</strong> On withdrawal or closure. See <a href="#" aria-label="Retention policy reference">Retention Policy</a>.
+                  </div>
+                </div>
+
+                <div class="hint">
+                  This consent is recorded and enforced independently for this purpose and can be withdrawn without affecting other purposes.
+                </div>
+              </div>
+            </details>
+
+            <div class="hint">Optional: makes the experience better, but is not required for transactions.</div>
+          </div>
+
+          <!-- GROUP 4: OFFERS (OPTIONAL) -->
+          <div class="subcard" data-group="cards_marketing" data-purpose="CARDS_MARKETING">
+            <div class="subhead">
+              <div>
+                <h3>Offers & promotions</h3>
+                <div class="submeta">
+                  <span class="chip"><span style="opacity:.8">Status:</span> <strong>Optional (toggle)</strong></span>
+                </div>
+              </div>
+
+              <div class="toggleWrap">
+                <div class="status" data-status="cards_marketing">OFF</div>
+                <button class="toggle" role="switch" aria-checked="false" data-key="cards_marketing">
+                  <span class="knob"></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <div class="label">Purpose</div>
+                <ul>
+                  <li>Send offers (e.g., EMI plans, limit enhancements, rewards promotions) and marketing communications</li>
+                </ul>
+              </div>
+              <div>
+                <div class="label">Withdrawal impact</div>
+                <div class="small">
+                  You can withdraw anytime. Core card services are not affected.
+                  Processing linked to withdrawn consent stops going forward.
+                </div>
+              </div>
+            </div>
+
+            <details>
+              <summary>Details (data used, sharing, retention, processors) <span class="chev">Click to expand</span></summary>
+              <div class="content">
+                <div style="margin-bottom:10px;">
+                  <div class="label">Data we will use (examples)</div>
+                  <ul>
+                    <li>Basic profile and relationship signals (not sensitive data for targeting)</li>
+                  </ul>
+                </div>
+
+                <div style="margin-bottom:10px;">
+                  <div class="label">Processors (acting on our instructions)</div>
+                  <ul>
+                    <li>CRM/SMS/email tools (authorised processors)</li>
+                  </ul>
+                </div>
+
+                <div style="margin-bottom:10px;">
+                  <div class="label">Retention</div>
+                  <div class="small">
+                    <strong>Minimum:</strong> While consent is active<br/>
+                    <strong>Maximum:</strong> As per internal policy<br/>
+                    <strong>Expiry:</strong> On withdrawal (processing stops going forward). See <a href="#" aria-label="Retention policy reference">Retention Policy</a>.
+                  </div>
+                </div>
+
+                <div class="hint">
+                  This consent is recorded and enforced independently for this purpose and can be withdrawn without affecting other purposes.
+                </div>
+              </div>
+            </details>
+
+            <div class="hint">Optional: not required for card issuance or transactions.</div>
+          </div>
+
+        </div>
+      </article>
+    </main>
+
+    <section class="footer">
+      <h4>Your Rights</h4>
+      <div class="cols">
+        <div class="small">
+          <div class="label">Rights available</div>
+          <ul>
+            <li>Access and review your personal data</li>
+            <li>Correct inaccurate data</li>
+            <li>Withdraw optional consent at any time</li>
+            <li>Request erasure, where applicable</li>
+            <li>Grievance redressal</li>
+          </ul>
+          <div class="hint">
+            A record of your consent, including purpose, timestamp, and notice version, is securely maintained and may be requested.
+          </div>
+        </div>
+
+        <div class="small">
+          <div class="label">How to withdraw consent</div>
+          You can withdraw optional consents anytime from <strong>Profile → Privacy Settings</strong>.
+          Withdrawal is as easy as giving consent. Processing linked to withdrawn consent stops going forward, subject to legal/regulatory obligations.
+        </div>
+
+        <div class="small">
+          <div class="label">Grievance & contact</div>
+          <strong>Data Protection Officer / Grievance Officer:</strong> <em>[email / phone placeholder]</em><br/>
+          <span style="color:var(--muted)">You will receive an acknowledgement and reference number for tracking.</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast"><span class="dot accent"></span><span id="toastText">Updated.</span></div>
+
+  <script>
+    const toastEl = document.getElementById("toast");
+    const toastText = document.getElementById("toastText");
+    function showToast(msg){
+      toastText.textContent = msg;
+      toastEl.classList.add("show");
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(()=> toastEl.classList.remove("show"), 1400);
+    }
+    function setSwitch(btn, on){
+      btn.setAttribute("aria-checked", on ? "true" : "false");
+      const key = btn.dataset.key;
+      const statusEl = document.querySelector(`[data-status="${key}"]`);
+      if(statusEl) statusEl.textContent = on ? "ON" : "OFF";
+    }
+
+    document.querySelectorAll('[data-action="toggle-card"]').forEach(head => {
+      head.addEventListener("click", (e) => {
+        if(e.target.closest(".toggle")) return;
+        const card = head.closest(".card");
+        const body = card.querySelector('.body[data-body="1"]');
+        const isOpen = body.style.display !== "none";
+        body.style.display = isOpen ? "none" : "block";
+      });
+    });
+
+    document.querySelectorAll(".toggle").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if(btn.disabled) return;
+        const on = btn.getAttribute("aria-checked") !== "true";
+        setSwitch(btn, on);
+        showToast(`${btn.dataset.key.replaceAll("_"," ")} set to ${on ? "ON" : "OFF"}`);
+      });
+    });
+
+    document.getElementById("acceptAll").addEventListener("click", () => {
+      document.querySelectorAll(
+        '.toggle[data-key="cards_controls"], .toggle[data-key="cards_marketing"]'
+      ).forEach(b => setSwitch(b, true));
+      showToast("Accepted all optional");
+    });
+    document.getElementById("denyAll").addEventListener("click", () => {
+      document.querySelectorAll(
+        '.toggle[data-key="cards_controls"], .toggle[data-key="cards_marketing"]'
+      ).forEach(b => setSwitch(b, false));
+      showToast("Denied all optional");
+    });
+    document.getElementById("expandAll").addEventListener("click", () => {
+      document.querySelectorAll('.body[data-body="1"]').forEach(b => b.style.display = "block");
+      showToast("Expanded all");
+    });
+    document.getElementById("collapseAll").addEventListener("click", () => {
+      document.querySelectorAll('.body[data-body="1"]').forEach(b => b.style.display = "none");
+      showToast("Collapsed all");
+    });
+
+    document.getElementById("lang").addEventListener("change", (e) => {
+      showToast(`Language set to: ${e.target.options[e.target.selectedIndex].text} (placeholder)`);
+    });
+  </script>
+</body>
+</html>
