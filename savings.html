@@ -29,6 +29,8 @@
                   var(--bg);
       color:var(--text);
     }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
     .wrap{max-width:980px;margin:0 auto;padding:28px 18px 64px;}
     header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px;}
     .brand{display:flex;gap:12px;align-items:center;}
@@ -177,6 +179,21 @@
     .footer .cols{display:grid;grid-template-columns:1fr;gap:12px;}
     @media (min-width: 820px){.footer .cols{grid-template-columns:1fr 1fr 1fr}}
 
+    .inlinebar{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+      margin-top:10px;
+      color:var(--muted);
+      font-size:12.5px;
+    }
+    .select{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 8px 10px;
+      font-size: 12.5px;
+      outline: none;
+    }
     .toast{
       position: fixed;bottom: 16px;left: 50%;transform: translateX(-50%);
       background: rgba(17,26,46,.94);
@@ -202,8 +219,30 @@
         <div>
           <h1>Savings Account — Product Notice for Consent</h1>
           <p class="subtitle">
-            Your data, your choice. Core account usage is mandatory. Optional choices are shown clearly and can be changed anytime.
+            Your data, your choice. Core account usage is mandatory. Optional choices are separate and can be changed anytime.
           </p>
+
+          <!-- Auditor gaps covered: language + policy links + notice metadata -->
+          <div class="inlinebar">
+            <span><strong>Data Fiduciary:</strong> <em>[Legal Name Placeholder]</em></span>
+            <span>•</span>
+            <span><strong>Notice:</strong> <em>SAVINGS_NOTICE</em> • <strong>Version:</strong> <em>v1.0</em> • <strong>Effective:</strong> <em>[DD-MMM-YYYY]</em></span>
+            <span>•</span>
+
+            <label for="lang" style="color:var(--muted)"><strong>Language:</strong></label>
+            <select id="lang" class="select" aria-label="Language selector">
+              <option value="en" selected>English</option>
+              <option value="hi">हिंदी (Placeholder)</option>
+              <option value="mr">मराठी (Placeholder)</option>
+              <option value="ta">தமிழ் (Placeholder)</option>
+              <option value="bn">বাংলা (Placeholder)</option>
+            </select>
+
+            <span>•</span>
+            <a href="#" aria-label="Privacy policy link">Privacy Policy</a>
+            <span>•</span>
+            <a href="#" aria-label="Retention policy link">Retention Policy</a>
+          </div>
         </div>
       </div>
 
@@ -221,7 +260,6 @@
       <div class="pill"><span class="dot warn"></span>Details available (no extra steps to consent)</div>
     </div>
 
-    <!-- STATIC NOTICE CARD (always present) -->
     <main class="grid" id="cards">
       <article class="card" data-card="savings">
         <div class="cardhead" data-action="toggle-card">
@@ -243,8 +281,23 @@
           </div>
         </div>
 
-        <!-- Expandable body -->
         <div class="body" data-body="1">
+
+          <details style="margin-top:12px;">
+            <summary>Consent record & audit trail <span class="chev">Click to expand</span></summary>
+            <div class="content">
+              A secure record of your choices is maintained, including <strong>purpose</strong>, <strong>timestamp</strong>, and <strong>notice version</strong>.
+              You may request a copy of your consent record. Optional consents are recorded and enforced separately per purpose.
+            </div>
+          </details>
+
+          <details style="margin-top:12px;">
+            <summary>Cross-border transfers (if applicable) <span class="chev">Click to expand</span></summary>
+            <div class="content">
+              If any authorised processors store or process data outside India, we will disclose it in the Privacy Policy and ensure applicable safeguards.
+              <em>[Platform note: show this only when cross-border processing applies.]</em>
+            </div>
+          </details>
 
           <details style="margin-top:12px;">
             <summary>Automated checks (fraud & security) <span class="chev">Click to expand</span></summary>
@@ -255,7 +308,7 @@
           </details>
 
           <!-- GROUP 1: CORE (MANDATORY) -->
-          <div class="subcard" data-group="savings_core">
+          <div class="subcard" data-group="savings_core" data-purpose="SAVINGS_CORE">
             <div class="subhead">
               <div>
                 <h3>Core account operation + compliance + security</h3>
@@ -283,7 +336,10 @@
               </div>
               <div>
                 <div class="label">Withdrawal impact</div>
-                <div class="small">Mandatory processing is required to operate the account and meet legal obligations.</div>
+                <div class="small">
+                  Mandatory processing is required to operate the account and meet legal obligations.
+                  If you close the account, active processing stops except what we must retain by law.
+                </div>
               </div>
             </div>
 
@@ -303,12 +359,15 @@
                 </div>
 
                 <div style="margin-bottom:10px;">
-                  <div class="label">Shared with (categories)</div>
+                  <div class="label">Processors (acting on our instructions)</div>
                   <ul>
-                    <li>Regulators/authorities (where required by law)</li>
-                    <li>Authorised processors for core banking/hosting/security</li>
-                    <li>Payment and messaging infrastructure providers (as needed)</li>
-                    <li>Fraud/risk monitoring partners (for security controls)</li>
+                    <li>Core banking / hosting / security service providers under contractual safeguards</li>
+                    <li>Payment / messaging infrastructure providers (as needed for service delivery)</li>
+                    <li>Fraud and risk monitoring partners (for security controls)</li>
+                  </ul>
+                  <div class="label" style="margin-top:10px;">Disclosures (required/allowed by law)</div>
+                  <ul>
+                    <li>Regulators / authorities where required by law</li>
                   </ul>
                 </div>
 
@@ -316,8 +375,10 @@
                   <div class="label">Retention</div>
                   <div class="small">
                     <strong>Minimum:</strong> While your account is active<br/>
+                    <strong>Typical (banking reference):</strong> <em>[e.g., 5–10 years after closure — configurable]</em><br/>
                     <strong>Maximum:</strong> As required by applicable banking/financial laws and regulators<br/>
-                    <strong>Expiry:</strong> After closure, retained per statutory timelines, then archived/anonymised/deleted as per policy
+                    <strong>Expiry:</strong> After closure, retained per statutory timelines, then archived/anonymised/deleted as per policy.
+                    See <a href="#" aria-label="Retention policy reference">Retention Policy</a>.
                   </div>
                 </div>
 
@@ -325,16 +386,20 @@
                   <div class="label">Who processes this?</div>
                   <div class="small">
                     • The Financial Institution (Data Fiduciary)<br/>
-                    • Authorised service providers under safeguards<br/>
+                    • Authorised processors under safeguards<br/>
                     • Regulators/authorities where required by law
                   </div>
+                </div>
+
+                <div class="hint">
+                  Mandatory processing is not “bundled consent”; it is necessary for service delivery, compliance, and security.
                 </div>
               </div>
             </details>
           </div>
 
           <!-- GROUP 2: ESSENTIAL COMMS (MANDATORY) -->
-          <div class="subcard" data-group="savings_comms">
+          <div class="subcard" data-group="savings_comms" data-purpose="SAVINGS_ESSENTIAL_ALERTS">
             <div class="subhead">
               <div>
                 <h3>Statements & essential alerts</h3>
@@ -377,7 +442,7 @@
                 </div>
 
                 <div style="margin-bottom:10px;">
-                  <div class="label">Shared with (categories)</div>
+                  <div class="label">Processors (acting on our instructions)</div>
                   <ul>
                     <li>SMS/email delivery providers (authorised processors)</li>
                     <li>Bank servicing systems</li>
@@ -389,7 +454,7 @@
                   <div class="small">
                     <strong>Minimum:</strong> While you use the service<br/>
                     <strong>Maximum:</strong> As required for audit/disputes under applicable laws<br/>
-                    <strong>Expiry:</strong> As per statutory timelines after closure
+                    <strong>Expiry:</strong> As per statutory timelines after closure. See <a href="#" aria-label="Retention policy reference">Retention Policy</a>.
                   </div>
                 </div>
 
@@ -400,12 +465,16 @@
                     • Bank servicing systems
                   </div>
                 </div>
+
+                <div class="hint">
+                  This purpose is recorded and enforced independently for auditability.
+                </div>
               </div>
             </details>
           </div>
 
           <!-- GROUP 3: MARKETING (OPTIONAL) -->
-          <div class="subcard" data-group="savings_marketing">
+          <div class="subcard" data-group="savings_marketing" data-purpose="SAVINGS_MARKETING">
             <div class="subhead">
               <div>
                 <h3>Offers & promotions</h3>
@@ -431,7 +500,10 @@
               </div>
               <div>
                 <div class="label">Withdrawal impact</div>
-                <div class="small">You can withdraw anytime. Core services are not affected.</div>
+                <div class="small">
+                  You can withdraw anytime. Core services are not affected.
+                  Processing linked to withdrawn consent stops going forward.
+                </div>
               </div>
             </div>
 
@@ -444,23 +516,30 @@
                     <li>Basic profile and relationship signals (not sensitive data for targeting)</li>
                   </ul>
                 </div>
+
                 <div style="margin-bottom:10px;">
-                  <div class="label">Shared with (categories)</div>
+                  <div class="label">Processors (acting on our instructions)</div>
                   <ul>
                     <li>CRM/SMS/email tools (authorised processors)</li>
                   </ul>
                 </div>
+
                 <div style="margin-bottom:10px;">
                   <div class="label">Retention</div>
                   <div class="small">
                     <strong>Minimum:</strong> While consent is active<br/>
                     <strong>Maximum:</strong> As per internal policy<br/>
-                    <strong>Expiry:</strong> On withdrawal (processing stops going forward)
+                    <strong>Expiry:</strong> On withdrawal (processing stops going forward). See <a href="#" aria-label="Retention policy reference">Retention Policy</a>.
                   </div>
                 </div>
+
                 <div>
                   <div class="label">Who processes this?</div>
                   <div class="small">• CRM/communication tools (authorised processors)</div>
+                </div>
+
+                <div class="hint">
+                  This consent is recorded and enforced independently for this purpose and can be withdrawn without affecting other purposes.
                 </div>
               </div>
             </details>
@@ -469,7 +548,7 @@
           </div>
 
           <!-- GROUP 4: ANALYTICS (OPTIONAL) -->
-          <div class="subcard" data-group="savings_analytics">
+          <div class="subcard" data-group="savings_analytics" data-purpose="SAVINGS_NONESSENTIAL_ANALYTICS">
             <div class="subhead">
               <div>
                 <h3>Non-essential service improvement analytics</h3>
@@ -495,7 +574,10 @@
               </div>
               <div>
                 <div class="label">Withdrawal impact</div>
-                <div class="small">You can withdraw anytime. Core services are not affected.</div>
+                <div class="small">
+                  You can withdraw anytime. Core services are not affected.
+                  Processing linked to withdrawn consent stops going forward.
+                </div>
               </div>
             </div>
 
@@ -508,23 +590,30 @@
                     <li>Usage signals (feature usage, crash/error logs) and aggregated patterns</li>
                   </ul>
                 </div>
+
                 <div style="margin-bottom:10px;">
-                  <div class="label">Shared with (categories)</div>
+                  <div class="label">Processors (acting on our instructions)</div>
                   <ul>
                     <li>Authorised analytics tooling (if used) under safeguards</li>
                   </ul>
                 </div>
+
                 <div style="margin-bottom:10px;">
                   <div class="label">Retention</div>
                   <div class="small">
                     <strong>Minimum:</strong> While consent is active<br/>
                     <strong>Maximum:</strong> As per internal policy<br/>
-                    <strong>Expiry:</strong> On withdrawal or account closure
+                    <strong>Expiry:</strong> On withdrawal or account closure. See <a href="#" aria-label="Retention policy reference">Retention Policy</a>.
                   </div>
                 </div>
+
                 <div>
                   <div class="label">Who processes this?</div>
                   <div class="small">• Authorised analytics tooling (if used) under safeguards</div>
+                </div>
+
+                <div class="hint">
+                  This consent is recorded and enforced independently for this purpose and can be withdrawn without affecting other purposes.
                 </div>
               </div>
             </details>
@@ -548,15 +637,20 @@
             <li>Request erasure, where applicable</li>
             <li>Grievance redressal</li>
           </ul>
+          <div class="hint">
+            A record of your consent, including purpose, timestamp, and notice version, is securely maintained and may be requested.
+          </div>
         </div>
+
         <div class="small">
           <div class="label">How to withdraw consent</div>
           You can withdraw optional consents anytime from <strong>Profile → Privacy Settings</strong>.
-          Withdrawal is as easy as giving consent. Processing linked to withdrawn consent will stop going forward.
+          Withdrawal is as easy as giving consent. Processing linked to withdrawn consent stops going forward, subject to legal/regulatory obligations.
         </div>
+
         <div class="small">
           <div class="label">Grievance & contact</div>
-          <strong>Data Protection Officer:</strong> <em>[email / phone placeholder]</em><br/>
+          <strong>Data Protection Officer / Grievance Officer:</strong> <em>[email / phone placeholder]</em><br/>
           <span style="color:var(--muted)">You will receive an acknowledgement and reference number for tracking.</span>
         </div>
       </div>
@@ -566,7 +660,6 @@
   <div class="toast" id="toast"><span class="dot accent"></span><span id="toastText">Updated.</span></div>
 
   <script>
-    // ---------- helpers ----------
     const toastEl = document.getElementById("toast");
     const toastText = document.getElementById("toastText");
     function showToast(msg){
@@ -582,10 +675,9 @@
       if(statusEl) statusEl.textContent = on ? "ON" : "OFF";
     }
 
-    // ---------- expandable card ----------
+    // Expand/collapse main card
     document.querySelectorAll('[data-action="toggle-card"]').forEach(head => {
       head.addEventListener("click", (e) => {
-        // Don't toggle card if clicking a switch
         if(e.target.closest(".toggle")) return;
         const card = head.closest(".card");
         const body = card.querySelector('.body[data-body="1"]');
@@ -594,7 +686,7 @@
       });
     });
 
-    // ---------- switches ----------
+    // Optional switches
     document.querySelectorAll(".toggle").forEach(btn => {
       btn.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -605,7 +697,7 @@
       });
     });
 
-    // ---------- toolbar actions ----------
+    // Toolbar actions
     document.getElementById("acceptAll").addEventListener("click", () => {
       document.querySelectorAll('.toggle[data-key="savings_marketing"], .toggle[data-key="savings_analytics"]').forEach(b => setSwitch(b, true));
       showToast("Accepted all optional");
@@ -621,6 +713,11 @@
     document.getElementById("collapseAll").addEventListener("click", () => {
       document.querySelectorAll('.body[data-body="1"]').forEach(b => b.style.display = "none");
       showToast("Collapsed all");
+    });
+
+    // Language selector placeholder behavior (no translations in template)
+    document.getElementById("lang").addEventListener("change", (e) => {
+      showToast(`Language set to: ${e.target.options[e.target.selectedIndex].text} (placeholder)`);
     });
   </script>
 </body>
