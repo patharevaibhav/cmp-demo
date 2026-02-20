@@ -200,6 +200,320 @@
     </div>
 
     <main class="grid" id="cards"></main>
+<main class="grid" id="cards">
+
+  <article class="card" data-card="savings">
+    <div class="cardhead">
+      <div class="cardtitle">
+        <div class="ico">🏦</div>
+        <div style="min-width:0">
+          <h2>Savings Account</h2>
+          <div class="meta">
+            <span class="chip"><span style="opacity:.8">Account ID:</span> <strong>SB •••• 4821</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="toggleWrap">
+        <div class="status">Contains optional controls</div>
+        <div style="display:flex;gap:8px;align-items:center;color:var(--muted);font-size:12px">
+          <span style="opacity:.85">Tap to review</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="body" data-body="1" style="display:none">
+
+      <details style="margin-top:12px;">
+        <summary>Automated checks (fraud & security) <span class="chev">Click to expand</span></summary>
+        <div class="content">
+          We may use automated checks for fraud detection, suspicious activity monitoring, and security controls.
+          Profiling for marketing offers is only done if you opt-in to Offers & promotions.
+        </div>
+      </details>
+
+      <!-- GROUP 1: CORE (MANDATORY) -->
+      <div class="subcard" data-group="savings_core">
+        <div class="subhead">
+          <div>
+            <h3>Core account operation + compliance + security</h3>
+            <div class="submeta">
+              <span class="chip"><span style="opacity:.8">Status:</span> <strong>Mandatory (locked)</strong></span>
+            </div>
+          </div>
+
+          <div class="toggleWrap">
+            <div class="status">Locked ON (mandatory)</div>
+            <button class="toggle" role="switch" aria-checked="true" data-key="savings_core" disabled>
+              <span class="knob"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <div class="label">Purpose</div>
+            <ul>
+              <li>Open and maintain your account; process deposits/withdrawals/transfers</li>
+              <li>Meet legal/regulatory obligations (KYC/AML/audit where applicable)</li>
+              <li>Protect you through fraud detection, risk controls, and security monitoring</li>
+            </ul>
+          </div>
+          <div>
+            <div class="label">Withdrawal impact</div>
+            <div class="small">Mandatory processing is required to operate the account and meet legal obligations.</div>
+          </div>
+        </div>
+
+        <details>
+          <summary>Details (data used, sharing, retention, processors) <span class="chev">Click to expand</span></summary>
+          <div class="content">
+            <div style="margin-bottom:10px;">
+              <div class="label">Data we will use (examples)</div>
+              <ul>
+                <li>Identity & KYC (name, date of birth, PAN; Aadhaar only where permitted)</li>
+                <li>Contact (mobile number, email, address)</li>
+                <li>Account identifiers (customer/CIF ID, account number)</li>
+                <li>Transactions (amount, date/time, counterparty/beneficiary reference, UPI/VPA where applicable)</li>
+                <li>Compliance & audit logs (KYC verification logs, consent logs, audit trail)</li>
+                <li>Digital banking/session logs (device ID, IP address, login timestamps — if enabled)</li>
+              </ul>
+            </div>
+
+            <div style="margin-bottom:10px;">
+              <div class="label">Shared with (categories)</div>
+              <ul>
+                <li>Regulators/authorities (where required by law)</li>
+                <li>Authorised processors for core banking/hosting/security</li>
+                <li>Payment and messaging infrastructure providers (as needed)</li>
+                <li>Fraud/risk monitoring partners (for security controls)</li>
+              </ul>
+            </div>
+
+            <div style="margin-bottom:10px;">
+              <div class="label">Retention</div>
+              <div class="small">
+                <strong>Minimum:</strong> While your account is active<br/>
+                <strong>Maximum:</strong> As required by applicable banking/financial laws and regulators<br/>
+                <strong>Expiry:</strong> After closure, retained per statutory timelines, then archived/anonymised/deleted as per policy
+              </div>
+            </div>
+
+            <div>
+              <div class="label">Who processes this?</div>
+              <div class="small">
+                • The Financial Institution (Data Fiduciary)<br/>
+                • Authorised service providers under safeguards<br/>
+                • Regulators/authorities where required by law
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- GROUP 2: ESSENTIAL COMMS (MANDATORY) -->
+      <div class="subcard" data-group="savings_comms">
+        <div class="subhead">
+          <div>
+            <h3>Statements & essential alerts</h3>
+            <div class="submeta">
+              <span class="chip"><span style="opacity:.8">Status:</span> <strong>Mandatory (locked)</strong></span>
+            </div>
+          </div>
+
+          <div class="toggleWrap">
+            <div class="status">Locked ON (mandatory)</div>
+            <button class="toggle" role="switch" aria-checked="true" data-key="savings_comms" disabled>
+              <span class="knob"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <div class="label">Purpose</div>
+            <ul>
+              <li>Send statements, transaction alerts, and essential service/security notifications</li>
+              <li>Support servicing and grievance communications</li>
+            </ul>
+          </div>
+          <div>
+            <div class="label">Withdrawal impact</div>
+            <div class="small">Mandatory servicing communication cannot be disabled.</div>
+          </div>
+        </div>
+
+        <details>
+          <summary>Details (data used, sharing, retention, processors) <span class="chev">Click to expand</span></summary>
+          <div class="content">
+            <div style="margin-bottom:10px;">
+              <div class="label">Data we will use (examples)</div>
+              <ul>
+                <li>Contact (mobile/email)</li>
+                <li>Account and transaction references (for alerts/statements)</li>
+              </ul>
+            </div>
+
+            <div style="margin-bottom:10px;">
+              <div class="label">Shared with (categories)</div>
+              <ul>
+                <li>SMS/email delivery providers (authorised processors)</li>
+                <li>Bank servicing systems</li>
+              </ul>
+            </div>
+
+            <div style="margin-bottom:10px;">
+              <div class="label">Retention</div>
+              <div class="small">
+                <strong>Minimum:</strong> While you use the service<br/>
+                <strong>Maximum:</strong> As required for audit/disputes under applicable laws<br/>
+                <strong>Expiry:</strong> As per statutory timelines after closure
+              </div>
+            </div>
+
+            <div>
+              <div class="label">Who processes this?</div>
+              <div class="small">
+                • Messaging/email providers (as authorised processors)<br/>
+                • Bank servicing systems
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- GROUP 3: MARKETING (OPTIONAL) -->
+      <div class="subcard" data-group="savings_marketing">
+        <div class="subhead">
+          <div>
+            <h3>Offers & promotions</h3>
+            <div class="submeta">
+              <span class="chip"><span style="opacity:.8">Status:</span> <strong>Optional (toggle)</strong></span>
+            </div>
+          </div>
+
+          <div class="toggleWrap">
+            <div class="status">OFF</div>
+            <button class="toggle" role="switch" aria-checked="false" data-key="savings_marketing">
+              <span class="knob"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <div class="label">Purpose</div>
+            <ul>
+              <li>Send product offers and promotional communications</li>
+            </ul>
+          </div>
+          <div>
+            <div class="label">Withdrawal impact</div>
+            <div class="small">You can withdraw anytime. Core services are not affected.</div>
+          </div>
+        </div>
+
+        <details>
+          <summary>Details (data used, sharing, retention, processors) <span class="chev">Click to expand</span></summary>
+          <div class="content">
+            <div style="margin-bottom:10px;">
+              <div class="label">Data we will use (examples)</div>
+              <ul>
+                <li>Basic profile and relationship signals (not sensitive data for targeting)</li>
+              </ul>
+            </div>
+            <div style="margin-bottom:10px;">
+              <div class="label">Shared with (categories)</div>
+              <ul>
+                <li>CRM/SMS/email tools (authorised processors)</li>
+              </ul>
+            </div>
+            <div style="margin-bottom:10px;">
+              <div class="label">Retention</div>
+              <div class="small">
+                <strong>Minimum:</strong> While consent is active<br/>
+                <strong>Maximum:</strong> As per internal policy<br/>
+                <strong>Expiry:</strong> On withdrawal (processing stops going forward)
+              </div>
+            </div>
+            <div>
+              <div class="label">Who processes this?</div>
+              <div class="small">• CRM/communication tools (authorised processors)</div>
+            </div>
+          </div>
+        </details>
+
+        <div class="hint">Turning this off stops marketing use going forward. Core services are not affected.</div>
+      </div>
+
+      <!-- GROUP 4: ANALYTICS (OPTIONAL) -->
+      <div class="subcard" data-group="savings_analytics">
+        <div class="subhead">
+          <div>
+            <h3>Non-essential service improvement analytics</h3>
+            <div class="submeta">
+              <span class="chip"><span style="opacity:.8">Status:</span> <strong>Optional (toggle)</strong></span>
+            </div>
+          </div>
+
+          <div class="toggleWrap">
+            <div class="status">OFF</div>
+            <button class="toggle" role="switch" aria-checked="false" data-key="savings_analytics">
+              <span class="knob"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <div class="label">Purpose</div>
+            <ul>
+              <li>Improve app experience and service quality (non-essential analytics)</li>
+            </ul>
+          </div>
+          <div>
+            <div class="label">Withdrawal impact</div>
+            <div class="small">You can withdraw anytime. Core services are not affected.</div>
+          </div>
+        </div>
+
+        <details>
+          <summary>Details (data used, sharing, retention, processors) <span class="chev">Click to expand</span></summary>
+          <div class="content">
+            <div style="margin-bottom:10px;">
+              <div class="label">Data we will use (examples)</div>
+              <ul>
+                <li>Usage signals (feature usage, crash/error logs) and aggregated patterns</li>
+              </ul>
+            </div>
+            <div style="margin-bottom:10px;">
+              <div class="label">Shared with (categories)</div>
+              <ul>
+                <li>Authorised analytics tooling (if used) under safeguards</li>
+              </ul>
+            </div>
+            <div style="margin-bottom:10px;">
+              <div class="label">Retention</div>
+              <div class="small">
+                <strong>Minimum:</strong> While consent is active<br/>
+                <strong>Maximum:</strong> As per internal policy<br/>
+                <strong>Expiry:</strong> On withdrawal or account closure
+              </div>
+            </div>
+            <div>
+              <div class="label">Who processes this?</div>
+              <div class="small">• Authorised analytics tooling (if used) under safeguards</div>
+            </div>
+          </div>
+        </details>
+
+        <div class="hint">Used only to improve experience. You can withdraw anytime.</div>
+      </div>
+
+    </div>
+  </article>
+
+</main>
 
     <section class="footer">
       <h4>Your Rights</h4>
