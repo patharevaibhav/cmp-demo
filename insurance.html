@@ -7,13 +7,21 @@
 
   <style>
     :root{
-      --bg:#0b1220; --text:#e6e9f2; --muted:#a9b2c7; --line:rgba(255,255,255,.10);
-      --chip:rgba(255,255,255,.09); --good:#22c55e; --warn:#f59e0b;
-      --accent:#60a5fa; --accent2:#a78bfa; --shadow:0 10px 30px rgba(0,0,0,.35); --radius:18px;
+      --bg:#0b1220;
+      --text:#e6e9f2;
+      --card:#111827;
+      --card2:#0f172a;
+      --muted:#a9b2c7;
+      --border:rgba(255,255,255,.10);
+      --accent:#60a5fa;
+      --ok:#22c55e;
+      --warn:#f59e0b;
+      --bad:#ef4444;
     }
     *{box-sizing:border-box}
     body{
-      margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       background: radial-gradient(1200px 600px at 20% -10%, rgba(96,165,250,.25), transparent 55%),
                   radial-gradient(1000px 500px at 90% 0%, rgba(167,139,250,.18), transparent 50%),
                   var(--bg);
@@ -21,106 +29,190 @@
     }
     a{color:var(--accent);text-decoration:none}
     a:hover{text-decoration:underline}
-    .wrap{max-width:980px;margin:0 auto;padding:28px 18px 64px}
 
-    header{display:flex;justify-content:space-between;gap:16px;margin-bottom:10px;align-items:flex-start}
-    .brand{display:flex;gap:12px}
+    .wrap{max-width:980px;margin:0 auto;padding:28px 18px 64px;}
+    header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px;}
+    .brand{display:flex;gap:12px;align-items:flex-start;}
     .logo{
       width:44px;height:44px;border-radius:14px;
-      background:linear-gradient(135deg, rgba(96,165,250,.95), rgba(167,139,250,.95));
-      box-shadow: var(--shadow);
-      display:grid;place-items:center;font-weight:800;letter-spacing:.5px;
+      background: linear-gradient(135deg, rgba(96,165,250,.95), rgba(167,139,250,.95));
+      display:grid;place-items:center;
+      font-weight:800;letter-spacing:.5px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
       flex:0 0 auto;
     }
-    h1{margin:0;font-size:18px;font-weight:800}
-    .subtitle{margin:6px 0 0;color:var(--muted);font-size:13px;max-width:760px;line-height:1.35}
+    h1{font-size:18px;margin:0 0 6px;font-weight:800;}
+    .subtitle{margin:0;color:var(--muted);font-size:13px;line-height:1.4;max-width:760px;}
 
-    .inlinebar{margin-top:10px;font-size:12.5px;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .select{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:12px;padding:6px 8px;color:var(--text);outline:none}
-
-    .toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;}
     .btn{
-      border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text);
-      padding:10px 12px;border-radius:14px;font-size:13px;cursor:pointer;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:650;
+      font-size:13px;
       transition: transform .05s ease, background .15s ease, border .15s ease;
       user-select:none;
     }
     .btn:hover{background: rgba(255,255,255,.09)}
     .btn:active{transform: translateY(1px)}
-    .btn.primary{border:1px solid rgba(96,165,250,.35);background:rgba(96,165,250,.18)}
-    .btn.danger{border:1px solid rgba(239,68,68,.35);background:rgba(239,68,68,.12)}
+    .btn.primary{border:1px solid rgba(96,165,250,.35);background: rgba(96,165,250,.18);}
+    .btn.danger{border:1px solid rgba(239,68,68,.35);background: rgba(239,68,68,.12);}
 
-    /* banner */
-    .banner{
-      margin: 10px 0 14px;
-      padding: 10px 12px;
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 12px;
-      background: rgba(96,165,250,.08);
-      font-size: 12.5px;
+    .inlinebar{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+      margin-top:10px;
+      color:var(--muted);
+      font-size:12.5px;
+    }
+    .select{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
       color: var(--text);
-      box-shadow: 0 10px 30px rgba(0,0,0,.18);
+      border-radius: 12px;
+      padding: 8px 10px;
+      font-size: 12.5px;
+      outline: none;
     }
 
-    .pillrow{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
-    .pill{background:var(--chip);border:1px solid var(--line);padding:8px 10px;border-radius:999px;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px}
-    .dot{width:8px;height:8px;border-radius:999px;background:#aaa}
-    .good{background:var(--good)} .accent{background:var(--accent)} .warn{background:var(--warn)}
+    .pillrow{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 18px;}
+    .pill{
+      background: rgba(255,255,255,.09);
+      border:1px solid var(--border);
+      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      display:flex;align-items:center;gap:8px;
+    }
+    .dot{width:8px;height:8px;border-radius:999px;background: rgba(255,255,255,.35);}
+    .dot.good{background: var(--ok)}
+    .dot.accent{background: var(--accent)}
+    .dot.warn{background: var(--warn)}
+
+    .grid{display:grid;grid-template-columns:1fr;gap:14px;}
 
     .card{
-      border:1px solid var(--line);
-      border-radius:var(--radius);
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      box-shadow: var(--shadow);
-      overflow:hidden
+      border:1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      overflow:hidden;
     }
     .cardhead{
-      padding:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:12px
+      padding:14px 14px 12px;
+      display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+      cursor:pointer;
     }
-    .cardhead h2{margin:0;font-size:14px;font-weight:800}
-    .status{font-size:11.5px;color:var(--muted);text-align:right}
+    .cardtitle{display:flex;align-items:flex-start;gap:10px;min-width:0;}
+    .ico{
+      width:34px;height:34px;border-radius:12px;
+      background: rgba(255,255,255,.07);
+      border:1px solid var(--border);
+      display:grid;place-items:center;
+      flex:0 0 auto;
+    }
+    .cardtitle h2{margin:0;font-size:14px;font-weight:850;line-height:1.2;}
+    .meta{margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+    .chip{
+      font-size:12px;color: var(--muted);
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--border);
+      padding:6px 8px;border-radius:999px;
+      display:inline-flex;align-items:center;gap:6px;
+    }
+    .chip strong{color: var(--text); font-weight:750}
+    .toggleWrap{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex:0 0 auto;}
+    .status{font-size:11.5px;color: var(--muted);text-align:right;max-width:260px;line-height:1.2;}
 
-    .body{display:none;padding:14px;border-top:1px solid var(--line);background:rgba(15,23,42,.35)}
+    .body{
+      padding: 0 14px 14px;
+      border-top: 1px solid var(--border);
+      background: rgba(15,23,42,.35);
+      display:none;
+    }
 
-    .subcard{border:1px solid var(--line);border-radius:16px;padding:12px;margin-top:12px;background:rgba(255,255,255,.045)}
-    .subhead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
-    .subhead h3{margin:0;font-size:13px;font-weight:850;line-height:1.25}
-    .hint{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.4}
+    .subcard{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.045);
+      border-radius:16px;
+      padding:12px;
+      margin-top:12px;
+    }
+    .subhead{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px;}
+    .subhead h3{margin:0;font-size:13px;font-weight:850;}
+    .submeta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+    .hint{color: var(--muted);font-size:12px;line-height:1.4;margin-top:8px;}
 
-    .row{display:grid;grid-template-columns:1fr;gap:10px}
-    @media (min-width:760px){.row{grid-template-columns:1fr 1fr;gap:12px}}
-    .label{font-size:12px;color:var(--muted);margin-bottom:6px}
-    ul{padding-left:16px;font-size:13px;margin:0;line-height:1.45}
+    .row{display:grid;grid-template-columns:1fr;gap:10px;}
+    @media (min-width: 760px){.row{grid-template-columns:1fr 1fr;gap:12px;}}
+    .label{color: var(--muted);font-size:12px;margin-bottom:6px;}
+    ul{margin:0;padding-left:16px;color: var(--text);font-size:13px;line-height:1.45;}
     li{margin:4px 0}
-    .small{font-size:12.5px;line-height:1.45;color:var(--text)}
+    .small{font-size:12.5px;color: var(--text);line-height:1.45;}
 
-    details{border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:10px;background:rgba(255,255,255,.05)}
-    summary{cursor:pointer;font-size:13px;font-weight:750;color:var(--text);list-style:none}
-    summary::-webkit-details-marker{display:none}
-    details .content{margin-top:10px;color:var(--muted);font-size:12.5px;line-height:1.55}
-
-    .toggleWrap{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
-    .toggle{
-      width:52px;height:30px;border-radius:999px;border:1px solid var(--line);
-      background:rgba(255,255,255,.08);position:relative;cursor:pointer;outline:none;
-      transition: background .15s ease, border .15s ease;
+    details{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      border-radius:14px;
+      padding:10px 12px;
+      margin-top:10px;
     }
-    .toggle[aria-checked="true"]{background:rgba(34,197,94,.24);border-color:rgba(34,197,94,.35)}
-    .toggle[disabled]{cursor:not-allowed;opacity:.65}
-    .knob{width:24px;height:24px;border-radius:999px;background:rgba(255,255,255,.85);position:absolute;top:3px;left:3px;transition: transform .15s ease;box-shadow:0 6px 14px rgba(0,0,0,.25)}
-    .toggle[aria-checked="true"] .knob{transform:translateX(22px)}
+    details summary{
+      cursor:pointer;font-weight:750;font-size:13px;color: var(--text);
+      list-style:none;display:flex;justify-content:space-between;gap:10px;align-items:center;
+    }
+    details summary::-webkit-details-marker{display:none}
+    .chev{color: var(--muted);font-size:12px}
+    details .content{margin-top:10px;color: var(--muted);font-size:12.5px;line-height:1.55;}
 
-    .footer{margin-top:18px;border:1px solid var(--line);border-radius:var(--radius);padding:14px;background:rgba(255,255,255,.05)}
-    .footer h4{margin:0 0 8px;font-size:13px;font-weight:900}
+    .toggle{
+      position:relative;width:52px;height:30px;border-radius:999px;
+      border:1px solid var(--border);background: rgba(255,255,255,.08);
+      cursor:pointer;transition: background .15s ease, border .15s ease;outline:none;
+    }
+    .toggle[aria-checked="true"]{background: rgba(34,197,94,.24);border-color: rgba(34,197,94,.35);}
+    .toggle[disabled]{cursor:not-allowed;opacity:.65;filter:saturate(.7);}
+    .knob{
+      position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:999px;
+      background: rgba(255,255,255,.85);transition: transform .15s ease;
+      box-shadow: 0 6px 14px rgba(0,0,0,.25);
+    }
+    .toggle[aria-checked="true"] .knob{transform: translateX(22px);}
+
+    .banner{
+      border:1px solid rgba(96,165,250,.35);
+      background: rgba(96,165,250,.10);
+      border-radius: 16px;
+      padding: 10px 12px;
+      margin-top:12px;
+      color: var(--text);
+      font-size: 12.5px;
+      line-height: 1.45;
+    }
+
+    .footer{
+      margin-top:18px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      border-radius: 18px;
+      padding:14px;
+    }
+    .footer h4{margin:0 0 8px;font-size:13px;font-weight:900;}
+    .footer .cols{display:grid;grid-template-columns:1fr;gap:12px;}
+    @media (min-width: 820px){.footer .cols{grid-template-columns:1fr 1fr 1fr}}
 
     .toast{
       position: fixed;bottom: 16px;left: 50%;transform: translateX(-50%);
       background: rgba(17,26,46,.94);
-      border:1px solid var(--line);
+      border:1px solid var(--border);
       border-radius: 999px;
       padding: 10px 14px;
       color: var(--text);
-      box-shadow: var(--shadow);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
       font-size: 12.5px;
       opacity: 0;pointer-events:none;
       transition: opacity .18s ease, transform .18s ease;
@@ -132,7 +224,6 @@
 
 <body>
   <div class="wrap">
-
     <header>
       <div class="brand">
         <div class="logo">DP</div>
@@ -140,6 +231,7 @@
           <h1>Insurance Distribution — Product Notice</h1>
           <p class="subtitle">
             Applicable where the Bank/NBFC acts as a Corporate Agent distributing insurance products.
+            Optional choices are separate and can be changed anytime.
           </p>
 
           <div class="inlinebar">
@@ -147,8 +239,7 @@
             <span>•</span>
             <span><strong>Notice:</strong> <em>INSURANCE_NOTICE</em> • <strong>Version:</strong> <em>v1.0</em> • <strong>Effective:</strong> <em>[DD-MMM-YYYY]</em></span>
             <span>•</span>
-
-            <label for="lang" style="color:var(--muted)"><strong>Language:</strong></label>
+            <label for="lang"><strong>Language:</strong></label>
             <select id="lang" class="select" aria-label="Language selector">
               <option value="en" selected>English</option>
               <option value="hi">हिंदी (Placeholder)</option>
@@ -156,7 +247,6 @@
               <option value="ta">தமிழ் (Placeholder)</option>
               <option value="bn">বাংলা (Placeholder)</option>
             </select>
-
             <span>•</span>
             <a href="#" aria-label="Privacy policy link">Privacy Policy</a>
             <span>•</span>
@@ -168,313 +258,337 @@
       <div class="toolbar">
         <button class="btn primary" id="acceptAll">Accept all optional</button>
         <button class="btn danger" id="denyAll">Deny all optional</button>
+        <button class="btn" id="expandAll">Expand all</button>
+        <button class="btn" id="collapseAll">Collapse all</button>
       </div>
     </header>
-
-    <!-- DPDP Role Clarification Banner (correct placement: AFTER header) -->
-    <div class="banner">
-      <strong>DPDP Role Clarification:</strong>
-      The Bank/NBFC acts as a Data Fiduciary for insurance distribution activities.
-      The insurer is an independent Data Fiduciary for policy issuance, servicing, and claims.
-    </div>
 
     <div class="pillrow">
       <div class="pill"><span class="dot good"></span>Mandatory (locked)</div>
       <div class="pill"><span class="dot accent"></span>Optional (toggle)</div>
-      <div class="pill"><span class="dot warn"></span>Details available</div>
+      <div class="pill"><span class="dot warn"></span>Details available (no extra steps)</div>
     </div>
 
-    <div class="card" id="mainCard">
-      <div class="cardhead" id="cardHead">
-        <div>
-          <h2>Insurance Distribution (Corporate Agent)</h2>
-          <div class="hint" style="margin-top:6px">
-            Covers proposal sourcing, KYC/proposal capture, sharing with chosen insurer, compliance, and essential communications.
+    <main class="grid" id="cards">
+      <article class="card" data-card="insurance">
+        <div class="cardhead" data-action="toggle-card">
+          <div class="cardtitle">
+            <div class="ico">🛡️</div>
+            <div style="min-width:0">
+              <h2>Insurance Distribution (Corporate Agent)</h2>
+              <div class="meta">
+                <span class="chip"><span style="opacity:.8">Channel:</span> <strong>Bank/NBFC</strong></span>
+                <span class="chip"><span style="opacity:.8">Ref:</span> <strong>IN •••• 6148</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="toggleWrap">
+            <div class="status">Contains optional controls<br/>Tap to review</div>
           </div>
         </div>
-        <span class="status">Tap to review</span>
-      </div>
 
-      <div class="body" id="cardBody">
+        <div class="body" data-body="1">
 
-        <details>
-          <summary>Consent record & audit trail</summary>
-          <div class="content">
-            A secure record of your consent, including <strong>purpose</strong>, <strong>timestamp</strong>, and <strong>notice version</strong>,
-            is maintained and can be requested. Optional consents are recorded and enforced separately per purpose.
-          </div>
-        </details>
-
-        <details>
-          <summary>Role clarity — Bank vs Insurer</summary>
-          <div class="content">
-            The Bank/NBFC acts as a <strong>Corporate Agent</strong> and is responsible for its insurance distribution activities.
-            The insurer is an independent Data Fiduciary for policy issuance, servicing and claims.
-          </div>
-        </details>
-
-        <details>
-          <summary>Cross-border transfers (if applicable)</summary>
-          <div class="content">
-            If any authorised processors store or process data outside India, we will disclose it in the Privacy Policy and ensure applicable safeguards.
-            <em>[Platform note: show this only when cross-border processing applies.]</em>
-          </div>
-        </details>
-
-        <!-- 1) CORE DISTRIBUTION (MANDATORY) -->
-        <div class="subcard" data-purpose="INS_DIST_CORE">
-          <div class="subhead">
-            <div>
-              <h3>Insurance sourcing, proposal capture & compliance</h3>
-              <div class="hint">Mandatory to proceed with proposal / fulfil regulatory obligations.</div>
-            </div>
-            <div class="toggleWrap">
-              <div class="status">Locked ON (mandatory)</div>
-              <button class="toggle" role="switch" aria-checked="true" disabled>
-                <span class="knob"></span>
-              </button>
-            </div>
+          <!-- ROLE CLARIFICATION BANNER (full width, in-sync) -->
+          <div class="banner">
+            <strong>DPDP Role Clarification:</strong>
+            The Bank/NBFC acts as a Data Fiduciary for insurance distribution activities.
+            The insurer is an independent Data Fiduciary for policy issuance, servicing, and claims.
           </div>
 
-          <div class="row">
-            <div>
-              <div class="label">Purpose</div>
-              <ul>
-                <li>Collect proposal information and verify identity (KYC) for insurance sourcing</li>
-                <li>Share necessary information with the insurer you choose</li>
-                <li>Meet IRDAI, AML, fraud-prevention and audit obligations</li>
-              </ul>
-            </div>
-            <div>
-              <div class="label">Withdrawal impact</div>
-              <div class="small">
-                This processing is required to proceed with an insurance proposal. If you do not proceed, we stop active processing except what we must retain by law and for audit/fraud controls.
-              </div>
-            </div>
-          </div>
-
-          <!-- Standardized KYC/data presentation (matches your other notices) -->
-          <details>
-            <summary>Details (data used, sharing, retention, processors)</summary>
+          <details style="margin-top:12px;">
+            <summary>Consent record & audit trail <span class="chev">Click to expand</span></summary>
             <div class="content">
-              <div style="margin-bottom:10px;">
-                <div class="label">Data we will use (examples)</div>
-                <ul>
-                  <li><strong>Identity & KYC:</strong> name, date of birth, PAN; Aadhaar only where permitted</li>
-                  <li><strong>Contact:</strong> mobile, email, address</li>
-                  <li><strong>Proposal details:</strong> nominee information, relationship, product selection, premium/payment preference</li>
-                  <li><strong>Risk disclosures:</strong> occupation/income band, lifestyle and risk declarations as required by product</li>
-                  <li><strong>Medical declarations:</strong> only where applicable for underwriting</li>
-                  <li><strong>Logs:</strong> consent record (purpose/timestamp/version), submission/verification logs</li>
-                  <li><strong>Digital session logs:</strong> device ID/IP/login timestamps (if enabled)</li>
-                </ul>
-              </div>
+              A secure record of your choices is maintained, including <strong>purpose</strong>, <strong>timestamp</strong>, and <strong>notice version</strong>.
+              Optional consents are recorded and enforced separately per purpose.
+            </div>
+          </details>
 
-              <div style="margin-bottom:10px;">
-                <div class="label">Processors (acting on our instructions)</div>
-                <ul>
-                  <li>Insurance distribution platforms / CRM tools used by the Bank/NBFC under safeguards</li>
-                  <li>KYC/verification partners used by the Bank/NBFC (as applicable)</li>
-                  <li>SMS/email delivery providers for essential acknowledgements</li>
-                  <li>Hosting/security providers supporting Bank/NBFC systems</li>
-                </ul>
+          <details style="margin-top:12px;">
+            <summary>Cross-border transfers (if applicable) <span class="chev">Click to expand</span></summary>
+            <div class="content">
+              If any authorised processors store or process data outside India, we will disclose it in the Privacy Policy and ensure applicable safeguards.
+              <em>[Platform note: show only when cross-border applies.]</em>
+            </div>
+          </details>
 
-                <div class="label" style="margin-top:10px;">Disclosures / shared parties</div>
-                <ul>
-                  <li><strong>Selected insurer</strong> (independent Data Fiduciary) to issue and service the policy</li>
-                  <li>Regulators / authorities where required by law (e.g., IRDAI, law enforcement)</li>
-                </ul>
-              </div>
-
-              <div style="margin-bottom:10px;">
-                <div class="label">Retention</div>
-                <div class="small">
-                  <strong>Minimum:</strong> While the proposal is active / until completion or cancellation<br/>
-                  <strong>Typical (industry reference):</strong> <em>[e.g., 5–10 years after policy termination/closure — configurable]</em><br/>
-                  <strong>Maximum:</strong> As required by applicable IRDAI and financial recordkeeping laws/regulators<br/>
-                  <strong>Expiry:</strong> After statutory timelines, data is archived/anonymised/deleted as per policy.
-                  See <a href="#" aria-label="Retention policy reference">Retention Policy</a>.
+          <!-- GROUP 1: CORE DISTRIBUTION (MANDATORY) -->
+          <div class="subcard" data-purpose="INS_DIST_CORE">
+            <div class="subhead">
+              <div>
+                <h3>Proposal sourcing, KYC/proposal capture & compliance</h3>
+                <div class="submeta">
+                  <span class="chip"><span style="opacity:.8">Status:</span> <strong>Mandatory (locked)</strong></span>
                 </div>
               </div>
 
-              <div class="hint">
-                Mandatory processing is needed for proposal sourcing and compliance; it is not bundled with optional purposes.
+              <div class="toggleWrap">
+                <div class="status">Locked ON (mandatory)</div>
+                <button class="toggle" role="switch" aria-checked="true" disabled>
+                  <span class="knob"></span>
+                </button>
               </div>
             </div>
-          </details>
-        </div>
 
-        <!-- 2) ESSENTIAL COMMUNICATION (MANDATORY) -->
-        <div class="subcard" data-purpose="INS_DIST_ESSENTIAL_ALERTS">
-          <div class="subhead">
-            <div>
-              <h3>Essential updates & acknowledgements</h3>
-              <div class="hint">Mandatory for proposal status updates, acknowledgements and compliance notices.</div>
-            </div>
-            <div class="toggleWrap">
-              <div class="status">Locked ON (mandatory)</div>
-              <button class="toggle" role="switch" aria-checked="true" disabled>
-                <span class="knob"></span>
-              </button>
-            </div>
-          </div>
-
-          <div class="row">
-            <div>
-              <div class="label">Purpose</div>
-              <ul>
-                <li>Send proposal acknowledgements, status updates, and essential notifications</li>
-                <li>Support servicing and grievance communications related to distribution</li>
-              </ul>
-            </div>
-            <div>
-              <div class="label">Withdrawal impact</div>
-              <div class="small">Mandatory servicing/security communication cannot be disabled.</div>
-            </div>
-          </div>
-
-          <details>
-            <summary>Details (data used, sharing, retention, processors)</summary>
-            <div class="content">
-              <div style="margin-bottom:10px;">
-                <div class="label">Data we will use (examples)</div>
+            <div class="row">
+              <div>
+                <div class="label">Purpose</div>
                 <ul>
-                  <li>Contact (mobile/email)</li>
-                  <li>Proposal references (masked ref, product, status)</li>
+                  <li>Collect proposal information and verify identity (KYC) for insurance distribution</li>
+                  <li>Share necessary information with the insurer you choose</li>
+                  <li>Meet IRDAI / AML / fraud-prevention / audit obligations</li>
                 </ul>
               </div>
-
-              <div style="margin-bottom:10px;">
-                <div class="label">Processors (acting on our instructions)</div>
-                <ul>
-                  <li>SMS/email delivery providers</li>
-                  <li>Bank/NBFC distribution servicing systems</li>
-                </ul>
-              </div>
-
-              <div style="margin-bottom:10px;">
-                <div class="label">Retention</div>
+              <div>
+                <div class="label">Withdrawal impact</div>
                 <div class="small">
-                  <strong>Minimum:</strong> While you use the service<br/>
-                  <strong>Maximum:</strong> As required for audit/disputes under applicable laws<br/>
-                  <strong>Expiry:</strong> As per statutory timelines. See <a href="#" aria-label="Retention policy reference">Retention Policy</a>.
+                  Mandatory processing is required to proceed with the insurance proposal.
+                  If you do not proceed, active processing stops except what must be retained by law/regulators and for audit/fraud controls.
+                </div>
+              </div>
+            </div>
+
+            <details>
+              <summary>Details (data used, sharing, retention, processors) <span class="chev">Click to expand</span></summary>
+              <div class="content">
+                <div style="margin-bottom:10px;">
+                  <div class="label">Data we will use (examples)</div>
+                  <ul>
+                    <li><strong>Identity & KYC:</strong> name, date of birth, PAN; Aadhaar only where permitted</li>
+                    <li><strong>Contact:</strong> mobile/email/address</li>
+                    <li><strong>Proposal details:</strong> nominee details, relationship, product selection, premium/payment preference</li>
+                    <li><strong>Risk disclosures:</strong> occupation/income band, risk declarations as required by product</li>
+                    <li><strong>Medical declarations:</strong> only where applicable for underwriting</li>
+                    <li><strong>Logs:</strong> consent (purpose/timestamp/version), submission/verification logs</li>
+                    <li><strong>Digital session logs:</strong> device ID/IP/login timestamps (if enabled)</li>
+                  </ul>
+                </div>
+
+                <div style="margin-bottom:10px;">
+                  <div class="label">Processors (acting on our instructions)</div>
+                  <ul>
+                    <li>Distribution/CRM tooling used by the Bank/NBFC under safeguards</li>
+                    <li>KYC/verification partners used by the Bank/NBFC (as applicable)</li>
+                    <li>SMS/email delivery providers (acknowledgements)</li>
+                    <li>Hosting/security providers supporting Bank/NBFC systems</li>
+                  </ul>
+
+                  <div class="label" style="margin-top:10px;">Disclosures / shared parties</div>
+                  <ul>
+                    <li><strong>Selected insurer</strong> (independent Data Fiduciary) for issuance/servicing/claims</li>
+                    <li>Regulators/authorities where required by law (e.g., IRDAI, law enforcement)</li>
+                  </ul>
+                </div>
+
+                <div style="margin-bottom:10px;">
+                  <div class="label">Retention</div>
+                  <div class="small">
+                    <strong>Minimum:</strong> While the proposal is active / until completion or cancellation<br/>
+                    <strong>Typical (industry reference):</strong> <em>[e.g., 5–10 years after policy termination/closure — configurable]</em><br/>
+                    <strong>Maximum:</strong> As required by applicable IRDAI and financial recordkeeping laws/regulators<br/>
+                    <strong>Expiry:</strong> After statutory timelines, data is archived/anonymised/deleted as per policy.
+                    See <a href="#" aria-label="Retention policy reference">Retention Policy</a>.
+                  </div>
+                </div>
+
+                <div class="hint">
+                  Mandatory processing is needed for proposal distribution and compliance; it is not bundled with optional purposes.
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- GROUP 2: ESSENTIAL COMMUNICATION (MANDATORY) -->
+          <div class="subcard" data-purpose="INS_DIST_ESSENTIAL_ALERTS">
+            <div class="subhead">
+              <div>
+                <h3>Essential updates & acknowledgements</h3>
+                <div class="submeta">
+                  <span class="chip"><span style="opacity:.8">Status:</span> <strong>Mandatory (locked)</strong></span>
                 </div>
               </div>
 
-              <div class="hint">This purpose is recorded and enforced independently for auditability.</div>
-            </div>
-          </details>
-        </div>
-
-        <!-- 3) OPTIONAL OFFERS (OPTIONAL) -->
-        <div class="subcard" data-purpose="INS_DIST_MARKETING">
-          <div class="subhead">
-            <div>
-              <h3>Insurance offers & cross-sell</h3>
-              <div class="hint">Optional. Not required for proposal processing.</div>
-            </div>
-            <div class="toggleWrap">
-              <div class="status" data-status="ins_marketing">OFF</div>
-              <button class="toggle" role="switch" aria-checked="false" data-key="ins_marketing">
-                <span class="knob"></span>
-              </button>
-            </div>
-          </div>
-
-          <div class="row">
-            <div>
-              <div class="label">Purpose</div>
-              <ul>
-                <li>Share offers, renewal reminders and promotional communications</li>
-              </ul>
-            </div>
-            <div>
-              <div class="label">Withdrawal impact</div>
-              <div class="small">
-                You can withdraw anytime. Core proposal processing and insurer servicing are not affected.
-                Processing linked to withdrawn consent stops going forward.
+              <div class="toggleWrap">
+                <div class="status">Locked ON (mandatory)</div>
+                <button class="toggle" role="switch" aria-checked="true" disabled>
+                  <span class="knob"></span>
+                </button>
               </div>
             </div>
-          </div>
 
-          <details>
-            <summary>Details (data used, sharing, retention, processors)</summary>
-            <div class="content">
-              <div style="margin-bottom:10px;">
-                <div class="label">Data we will use (examples)</div>
+            <div class="row">
+              <div>
+                <div class="label">Purpose</div>
                 <ul>
-                  <li>Basic profile and relationship signals (not sensitive data for targeting)</li>
+                  <li>Send acknowledgements, proposal status updates, and essential notifications</li>
+                  <li>Support distribution-related servicing and grievance communication</li>
                 </ul>
               </div>
-
-              <div style="margin-bottom:10px;">
-                <div class="label">Processors (acting on our instructions)</div>
-                <ul>
-                  <li>CRM/SMS/email tools (authorised processors)</li>
-                </ul>
+              <div>
+                <div class="label">Withdrawal impact</div>
+                <div class="small">Mandatory servicing/security communication cannot be disabled.</div>
               </div>
+            </div>
 
-              <div style="margin-bottom:10px;">
-                <div class="label">Retention</div>
-                <div class="small">
-                  <strong>Minimum:</strong> While consent is active<br/>
-                  <strong>Maximum:</strong> As per internal policy<br/>
-                  <strong>Expiry:</strong> On withdrawal (processing stops going forward). See <a href="#" aria-label="Retention policy reference">Retention Policy</a>.
+            <details>
+              <summary>Details (data used, sharing, retention, processors) <span class="chev">Click to expand</span></summary>
+              <div class="content">
+                <div style="margin-bottom:10px;">
+                  <div class="label">Data we will use (examples)</div>
+                  <ul>
+                    <li>Contact (mobile/email)</li>
+                    <li>Proposal references (masked ref, product, status)</li>
+                  </ul>
+                </div>
+
+                <div style="margin-bottom:10px;">
+                  <div class="label">Processors (acting on our instructions)</div>
+                  <ul>
+                    <li>SMS/email delivery providers</li>
+                    <li>Bank/NBFC distribution servicing systems</li>
+                  </ul>
+                </div>
+
+                <div style="margin-bottom:10px;">
+                  <div class="label">Retention</div>
+                  <div class="small">
+                    <strong>Minimum:</strong> While you use the service<br/>
+                    <strong>Maximum:</strong> As required for audit/disputes under applicable laws<br/>
+                    <strong>Expiry:</strong> As per statutory timelines. See <a href="#" aria-label="Retention policy reference">Retention Policy</a>.
+                  </div>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- GROUP 3: OFFERS (OPTIONAL) -->
+          <div class="subcard" data-purpose="INS_DIST_MARKETING">
+            <div class="subhead">
+              <div>
+                <h3>Insurance offers & cross-sell</h3>
+                <div class="submeta">
+                  <span class="chip"><span style="opacity:.8">Status:</span> <strong>Optional (toggle)</strong></span>
                 </div>
               </div>
 
-              <div class="hint">Recorded independently per purpose for auditability.</div>
+              <div class="toggleWrap">
+                <div class="status" data-status="ins_marketing">OFF</div>
+                <button class="toggle" role="switch" aria-checked="false" data-key="ins_marketing">
+                  <span class="knob"></span>
+                </button>
+              </div>
             </div>
-          </details>
-        </div>
 
-      </div>
-    </div>
+            <div class="row">
+              <div>
+                <div class="label">Purpose</div>
+                <ul>
+                  <li>Share offers, renewal reminders, and promotional communications</li>
+                </ul>
+              </div>
+              <div>
+                <div class="label">Withdrawal impact</div>
+                <div class="small">
+                  You can withdraw anytime. Core proposal processing is not affected.
+                  Processing linked to withdrawn consent stops going forward.
+                </div>
+              </div>
+            </div>
+
+            <details>
+              <summary>Details (data used, sharing, retention, processors) <span class="chev">Click to expand</span></summary>
+              <div class="content">
+                <div style="margin-bottom:10px;">
+                  <div class="label">Data we will use (examples)</div>
+                  <ul>
+                    <li>Basic profile and relationship signals (not sensitive data for targeting)</li>
+                  </ul>
+                </div>
+
+                <div style="margin-bottom:10px;">
+                  <div class="label">Processors (acting on our instructions)</div>
+                  <ul>
+                    <li>CRM/SMS/email tools (authorised processors)</li>
+                  </ul>
+                </div>
+
+                <div style="margin-bottom:10px;">
+                  <div class="label">Retention</div>
+                  <div class="small">
+                    <strong>Minimum:</strong> While consent is active<br/>
+                    <strong>Maximum:</strong> As per internal policy<br/>
+                    <strong>Expiry:</strong> On withdrawal (processing stops going forward). See <a href="#" aria-label="Retention policy reference">Retention Policy</a>.
+                  </div>
+                </div>
+
+                <div class="hint">Recorded independently per purpose for auditability.</div>
+              </div>
+            </details>
+
+            <div class="hint">Optional: not required for insurance proposal distribution.</div>
+          </div>
+
+        </div>
+      </article>
+    </main>
 
     <section class="footer">
       <h4>Your Rights</h4>
-      <ul>
-        <li>Access and correction of personal data</li>
-        <li>Withdraw optional consent</li>
-        <li>Request erasure, where applicable</li>
-        <li>Grievance redressal</li>
-      </ul>
-      <div class="small">
-        <strong>DPO / Grievance Officer:</strong> <em>[Contact details]</em>
-      </div>
-      <div class="hint">
-        Withdrawal is as easy as giving consent. Processing linked to withdrawn consent stops going forward, subject to legal/regulatory obligations.
+      <div class="cols">
+        <div class="small">
+          <div class="label">Rights available</div>
+          <ul>
+            <li>Access and correction of personal data</li>
+            <li>Withdraw optional consent</li>
+            <li>Request erasure, where applicable</li>
+            <li>Grievance redressal</li>
+          </ul>
+        </div>
+
+        <div class="small">
+          <div class="label">How to withdraw consent</div>
+          You can withdraw optional consents anytime from <strong>Profile → Privacy Settings</strong>.
+          Withdrawal is as easy as giving consent. Processing linked to withdrawn consent stops going forward, subject to legal/regulatory obligations.
+        </div>
+
+        <div class="small">
+          <div class="label">Grievance & contact</div>
+          <strong>Data Protection Officer / Grievance Officer:</strong> <em>[email / phone placeholder]</em><br/>
+          <span style="color:var(--muted)">You will receive an acknowledgement and reference number for tracking.</span>
+        </div>
       </div>
     </section>
 
   </div>
 
-  <div class="toast" id="toast"><span style="width:8px;height:8px;border-radius:999px;background:var(--accent);display:inline-block"></span><span id="toastText">Updated.</span></div>
+  <div class="toast" id="toast"><span class="dot accent"></span><span id="toastText">Updated.</span></div>
 
   <script>
-    const cardHead = document.getElementById("cardHead");
-    const cardBody = document.getElementById("cardBody");
     const toastEl = document.getElementById("toast");
     const toastText = document.getElementById("toastText");
-
     function showToast(msg){
       toastText.textContent = msg;
       toastEl.classList.add("show");
       clearTimeout(showToast._t);
       showToast._t = setTimeout(()=> toastEl.classList.remove("show"), 1400);
     }
-
-    cardHead.addEventListener("click", () => {
-      const open = cardBody.style.display === "block";
-      cardBody.style.display = open ? "none" : "block";
-    });
-
     function setSwitch(btn, on){
       btn.setAttribute("aria-checked", on ? "true" : "false");
       const key = btn.dataset.key;
       const statusEl = document.querySelector(`[data-status="${key}"]`);
       if(statusEl) statusEl.textContent = on ? "ON" : "OFF";
     }
+
+    document.querySelectorAll('[data-action="toggle-card"]').forEach(head => {
+      head.addEventListener("click", (e) => {
+        if(e.target.closest(".toggle")) return;
+        const card = head.closest(".card");
+        const body = card.querySelector('.body[data-body="1"]');
+        const isOpen = body.style.display !== "none";
+        body.style.display = isOpen ? "none" : "block";
+      });
+    });
 
     document.querySelectorAll(".toggle").forEach(btn => {
       btn.addEventListener("click", (e) => {
@@ -490,10 +604,17 @@
       document.querySelectorAll('.toggle[data-key="ins_marketing"]').forEach(b => setSwitch(b, true));
       showToast("Accepted all optional");
     });
-
     document.getElementById("denyAll").addEventListener("click", () => {
       document.querySelectorAll('.toggle[data-key="ins_marketing"]').forEach(b => setSwitch(b, false));
       showToast("Denied all optional");
+    });
+    document.getElementById("expandAll").addEventListener("click", () => {
+      document.querySelectorAll('.body[data-body="1"]').forEach(b => b.style.display = "block");
+      showToast("Expanded all");
+    });
+    document.getElementById("collapseAll").addEventListener("click", () => {
+      document.querySelectorAll('.body[data-body="1"]').forEach(b => b.style.display = "none");
+      showToast("Collapsed all");
     });
 
     document.getElementById("lang").addEventListener("change", (e) => {
