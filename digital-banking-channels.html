@@ -1,0 +1,1106 @@
+<!-- File: digital-banking-channels.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Master Product Notice 7 — Digital Banking Channels</title>
+  <style>
+    :root{
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --brand:#1f6feb;
+      --brand-2:#0ea5e9;
+      --ok:#16a34a;
+      --warn:#f59e0b;
+      --danger:#ef4444;
+      --shadow: 0 10px 25px rgba(17,24,39,.08);
+      --radius: 16px;
+      --radius-sm: 12px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--text);
+      background: radial-gradient(1200px 500px at 20% 0%, rgba(31,111,235,.10), transparent 60%),
+                  radial-gradient(900px 450px at 90% 10%, rgba(14,165,233,.10), transparent 55%),
+                  var(--bg);
+    }
+    a{color:var(--brand); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{
+      max-width: 1060px;
+      margin: 28px auto 60px;
+      padding: 0 16px;
+    }
+    .topbar{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      padding: 14px 16px;
+      background: rgba(255,255,255,.75);
+      border:1px solid rgba(229,231,235,.9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+    }
+    .logo{
+      width:42px;height:42px;border-radius:14px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      display:grid;place-items:center;
+      box-shadow: 0 10px 18px rgba(31,111,235,.25);
+      color:#fff;
+      font-weight:800;
+      letter-spacing:.5px;
+    }
+    .brand h1{
+      margin:0;
+      font-size: 15px;
+      line-height: 1.2;
+      letter-spacing:.2px;
+    }
+    .brand .sub{
+      margin-top:2px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .actions{
+      display:flex; align-items:center; gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .pill{
+      border:1px solid var(--line);
+      background: #fff;
+      border-radius: 999px;
+      padding: 8px 10px;
+      font-size: 12px;
+      color: var(--muted);
+      display:flex; gap:8px; align-items:center;
+    }
+    select, button{
+      font-family:inherit;
+    }
+    .select{
+      border:1px solid var(--line);
+      background:#fff;
+      padding: 9px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--text);
+      outline:none;
+    }
+    .btn{
+      border:none;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      color:#fff;
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 12px;
+      cursor:pointer;
+      box-shadow: 0 10px 18px rgba(31,111,235,.22);
+    }
+    .btn:disabled{
+      cursor:not-allowed;
+      opacity:.55;
+      box-shadow:none;
+    }
+    .btn.secondary{
+      background:#fff;
+      color: var(--text);
+      border: 1px solid var(--line);
+      box-shadow:none;
+      font-weight:600;
+    }
+    .hero{
+      margin-top: 16px;
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(229,231,235,.95);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      backdrop-filter: blur(8px);
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.4fr .6fr;
+      gap: 14px;
+      align-items:start;
+    }
+    .hero h2{
+      margin:0 0 6px;
+      font-size: 18px;
+      letter-spacing:.2px;
+    }
+    .hero p{
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .meta{
+      display:grid;
+      gap: 8px;
+      justify-items:stretch;
+    }
+    .meta .box{
+      background:#fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 12px;
+    }
+    .meta .k{
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom:4px;
+    }
+    .meta .v{
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .section{
+      margin-top: 16px;
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(229,231,235,.95);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px;
+      backdrop-filter: blur(8px);
+    }
+    .section h3{
+      margin: 0 0 10px;
+      font-size: 14px;
+      letter-spacing:.2px;
+    }
+    .section .hint{
+      margin: -4px 0 12px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 900px){
+      .hero-grid{grid-template-columns: 1fr}
+      .grid{grid-template-columns: 1fr}
+    }
+
+    .card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      overflow:hidden;
+    }
+    .card-top{
+      padding: 12px 12px 10px;
+      display:flex;
+      gap: 10px;
+      align-items:flex-start;
+      justify-content:space-between;
+    }
+    .card-title{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      min-width:0;
+    }
+    .card-title .t{
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing:.2px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .badge{
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fafafa;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .badge.must{border-color: rgba(22,163,74,.35); background: rgba(22,163,74,.08); color: var(--ok);}
+    .badge.opt{border-color: rgba(245,158,11,.40); background: rgba(245,158,11,.10); color: #92400e;}
+    .card-title .d{
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .toggle{
+      flex: 0 0 auto;
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      padding-top: 2px;
+    }
+    .switch{
+      position:relative;
+      width: 46px;
+      height: 26px;
+    }
+    .switch input{
+      opacity:0; width:0; height:0;
+    }
+    .slider{
+      position:absolute;
+      cursor:pointer;
+      top:0; left:0; right:0; bottom:0;
+      background:#e5e7eb;
+      transition:.2s;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+    }
+    .slider:before{
+      position:absolute;
+      content:"";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      top: 2.5px;
+      background:white;
+      transition:.2s;
+      border-radius: 999px;
+      box-shadow: 0 4px 10px rgba(17,24,39,.12);
+    }
+    .switch input:checked + .slider{
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      border-color: rgba(31,111,235,.45);
+    }
+    .switch input:checked + .slider:before{
+      transform: translateX(20px);
+    }
+    .state{
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .state.off{color: var(--muted);}
+    .state.on{color: var(--ok);}
+
+    details{
+      border-top: 1px dashed var(--line);
+      padding: 10px 12px 12px;
+      background: #fcfcfd;
+    }
+    summary{
+      cursor:pointer;
+      font-weight: 800;
+      font-size: 12px;
+      color: var(--text);
+      list-style:none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    summary::-webkit-details-marker{display:none}
+    .chev{
+      width: 18px; height: 18px;
+      border-radius: 999px;
+      display:grid; place-items:center;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1;
+      background:#fff;
+      flex:0 0 auto;
+    }
+    details[open] .chev{transform: rotate(180deg)}
+    .detail{
+      margin-top: 10px;
+      display:grid;
+      gap: 10px;
+    }
+    .kv{
+      display:grid;
+      grid-template-columns: 160px 1fr;
+      gap: 10px;
+      align-items:start;
+      font-size: 12px;
+    }
+    @media (max-width: 520px){
+      .kv{grid-template-columns: 1fr}
+    }
+    .kv .k{
+      color: var(--muted);
+      font-weight: 800;
+    }
+    .kv .v{
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .list{
+      margin: 0;
+      padding-left: 18px;
+      color: var(--text);
+      line-height: 1.55;
+    }
+    .muted{color:var(--muted)}
+    .note{
+      margin-top: 12px;
+      border: 1px solid rgba(31,111,235,.25);
+      background: rgba(31,111,235,.06);
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-size: 12px;
+      color: #0b3a86;
+      line-height: 1.45;
+    }
+    .note strong{color:#0b3a86}
+    .footer{
+      margin-top: 16px;
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .artifact{
+      margin-top: 14px;
+      background:#0b1220;
+      color:#e5e7eb;
+      border-radius: var(--radius);
+      border:1px solid rgba(229,231,235,.12);
+      overflow:hidden;
+    }
+    .artifact .bar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(229,231,235,.12);
+      background: rgba(255,255,255,.03);
+    }
+    .artifact .bar .title{
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing:.25px;
+    }
+    .artifact pre{
+      margin:0;
+      padding: 12px;
+      overflow:auto;
+      font-family: var(--mono);
+      font-size: 11px;
+      line-height: 1.55;
+    }
+    .smallbtn{
+      border:1px solid rgba(229,231,235,.18);
+      background: rgba(255,255,255,.04);
+      color:#e5e7eb;
+      padding: 8px 10px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .smallbtn:hover{background: rgba(255,255,255,.07)}
+    .danger{
+      border-color: rgba(239,68,68,.35);
+      background: rgba(239,68,68,.10);
+      color: #fecaca;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">BK</div>
+        <div>
+          <h1>Consolidated Notice for Consent</h1>
+          <div class="sub">Master Product Notice 7 — Digital Banking Channels</div>
+        </div>
+      </div>
+      <div class="actions">
+        <div class="pill" title="No pre-checked toggles. You can withdraw anytime.">
+          <span>DPDP-ready</span>
+          <span style="opacity:.5">•</span>
+          <span id="consentCount">0 selected</span>
+        </div>
+        <select class="select" id="lang">
+          <option value="en" selected>English</option>
+          <option value="hi">हिन्दी</option>
+          <option value="mr">मराठी</option>
+        </select>
+        <button class="btn secondary" id="withdrawAllBtn" type="button">Withdraw all</button>
+        <button class="btn" id="saveBtn" type="button" disabled>Save preferences</button>
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-grid">
+        <div>
+          <h2>How we use your data across our digital banking channels</h2>
+          <p>
+            Choose consent <strong>per purpose</strong> for our digital channels (NetBanking, Mobile App, UPI, alerts, chat/call support, and security).
+            Your choices apply only to the purposes you select. <strong>No bundled consent</strong> and <strong>no pre-checked toggles</strong>.
+          </p>
+          <div class="note">
+            <strong>Important:</strong> Some processing is required to provide secure access (for example, login authentication, session protection, fraud detection).
+            Where applicable, such purposes are marked <span class="badge must">Essential</span>. Optional purposes are marked <span class="badge opt">Optional</span>.
+          </div>
+        </div>
+        <div class="meta">
+          <div class="box">
+            <div class="k">Data Fiduciary</div>
+            <div class="v">Your Bank (Digital Channels)</div>
+          </div>
+          <div class="box">
+            <div class="k">Notice version</div>
+            <div class="v">MPN-07 / v1.0</div>
+          </div>
+          <div class="box">
+            <div class="k">Consent artifact</div>
+            <div class="v">Audit-ready (timestamp, purpose ID, status, language)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Common (mandatory) identity & KYC data used across channel access</h3>
+      <p class="hint">
+        This data is typically required to identify you and secure your account. It may be used alongside the purposes below.
+      </p>
+      <div class="card" style="border-style:solid;">
+        <div class="card-top">
+          <div class="card-title">
+            <div class="t">KYC / Identity & Account Linking <span class="badge must">Essential</span></div>
+            <div class="d">
+              Used to verify identity and link you to your accounts when you use digital channels.
+            </div>
+          </div>
+        </div>
+        <details open>
+          <summary>
+            What this includes
+            <span class="chev">⌄</span>
+          </summary>
+          <div class="detail">
+            <div class="kv">
+              <div class="k">Categories of data</div>
+              <div class="v">
+                <ul class="list">
+                  <li>Customer identifiers (Customer ID, account identifiers, masked card/loan references)</li>
+                  <li>Contact details (mobile number, email, address for communication)</li>
+                  <li>KYC attributes (name, DOB, PAN, Aadhaar/Offline KYC reference where applicable, CKYC reference)</li>
+                  <li>Authentication factors (login ID, hashed credentials, device binding tokens)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="kv">
+              <div class="k">Sharing / processors</div>
+              <div class="v">
+                Regulated KYC utilities/registries where applicable, SMS/email gateways for OTP delivery, and security service providers used for secure authentication.
+              </div>
+            </div>
+            <div class="kv">
+              <div class="k">Retention</div>
+              <div class="v">
+                Retained as required for account servicing, legal/regulatory obligations, dispute handling, and audit (duration depends on product and law).
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- PURPOSE CARDS -->
+    <div class="section">
+      <h3>Choose your consent by purpose</h3>
+      <p class="hint">
+        Each card is a separate purpose with its own data categories, sharing, retention, and withdrawal implications.
+      </p>
+
+      <div class="grid">
+
+        <!-- P7-DC-01 -->
+        <div class="card" data-purpose="P7-DC-01">
+          <div class="card-top">
+            <div class="card-title">
+              <div class="t">
+                Secure login, OTP & session protection
+                <span class="badge must">Essential</span>
+              </div>
+              <div class="d">Authenticate you, protect sessions, and prevent unauthorized access across web/app.</div>
+            </div>
+            <div class="toggle">
+              <span class="state off" id="state-P7-DC-01">Off</span>
+              <label class="switch" aria-label="Toggle consent for Secure login, OTP & session protection">
+                <input type="checkbox" id="toggle-P7-DC-01" />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+          <details>
+            <summary>View purpose details <span class="chev">⌄</span></summary>
+            <div class="detail">
+              <div class="kv">
+                <div class="k">Purpose</div>
+                <div class="v">Authentication, OTP delivery, device binding, session management, and access control.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Categories of data</div>
+                <div class="v">
+                  Login identifiers, OTP/transaction tokens, device identifiers, session IDs, IP address, app/web telemetry needed for session integrity.
+                </div>
+              </div>
+              <div class="kv">
+                <div class="k">Sharing / processors</div>
+                <div class="v">OTP delivery providers (SMS/email), authentication and security service providers, internal security operations.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Retention</div>
+                <div class="v">Min: 90 days (security logs). Max: up to 8 years where required for disputes, fraud investigations, or legal obligations.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Withdrawal implications</div>
+                <div class="v"><strong>If withdrawn:</strong> You may not be able to access digital channels securely (login/OTP features may stop).</div>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- P7-DC-02 -->
+        <div class="card" data-purpose="P7-DC-02">
+          <div class="card-top">
+            <div class="card-title">
+              <div class="t">
+                Fraud monitoring & anomaly detection
+                <span class="badge must">Essential</span>
+              </div>
+              <div class="d">Detect suspicious activity, prevent fraud, and protect your account and transactions.</div>
+            </div>
+            <div class="toggle">
+              <span class="state off" id="state-P7-DC-02">Off</span>
+              <label class="switch" aria-label="Toggle consent for Fraud monitoring & anomaly detection">
+                <input type="checkbox" id="toggle-P7-DC-02" />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+          <details>
+            <summary>View purpose details <span class="chev">⌄</span></summary>
+            <div class="detail">
+              <div class="kv">
+                <div class="k">Purpose</div>
+                <div class="v">Fraud risk scoring, behavioral anomaly detection, transaction security, investigation workflows.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Categories of data</div>
+                <div class="v">
+                  Transaction metadata, device/app signals, login attempts, IP/geolocation at city level (where available),
+                  and security event logs (no pre-checked marketing profiling).
+                </div>
+              </div>
+              <div class="kv">
+                <div class="k">Sharing / processors</div>
+                <div class="v">Fraud risk vendors, security analytics providers, internal fraud control units; sharing is limited to risk and security needs.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Retention</div>
+                <div class="v">Min: 180 days. Max: up to 10 years for investigations, dispute resolution, and legal/regulatory compliance.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Withdrawal implications</div>
+                <div class="v"><strong>If withdrawn:</strong> We may restrict high-risk channel actions; some services may be limited to protect you and the bank.</div>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- P7-DC-03 -->
+        <div class="card" data-purpose="P7-DC-03">
+          <div class="card-top">
+            <div class="card-title">
+              <div class="t">
+                Digital transaction servicing (UPI / NetBanking / App)
+                <span class="badge must">Essential</span>
+              </div>
+              <div class="d">Process your requests on digital channels: transfers, bill pay, statements, service requests.</div>
+            </div>
+            <div class="toggle">
+              <span class="state off" id="state-P7-DC-03">Off</span>
+              <label class="switch" aria-label="Toggle consent for Digital transaction servicing">
+                <input type="checkbox" id="toggle-P7-DC-03" />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+          <details>
+            <summary>View purpose details <span class="chev">⌄</span></summary>
+            <div class="detail">
+              <div class="kv">
+                <div class="k">Purpose</div>
+                <div class="v">Execute channel actions you initiate, including payments, transfers, beneficiary management, and service requests.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Categories of data</div>
+                <div class="v">Account identifiers, transaction instructions, payee/beneficiary details, device/session identifiers, channel timestamps.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Sharing / processors</div>
+                <div class="v">Payment networks and processors (e.g., UPI ecosystem participants), billers, and technology service providers as needed to complete your instruction.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Retention</div>
+                <div class="v">Min: 1 year (operational). Max: up to 10 years for statements, disputes, and statutory record-keeping.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Withdrawal implications</div>
+                <div class="v"><strong>If withdrawn:</strong> Digital channel transactions and requests may stop; you can use offline/branch alternatives where available.</div>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- P7-DC-04 -->
+        <div class="card" data-purpose="P7-DC-04">
+          <div class="card-top">
+            <div class="card-title">
+              <div class="t">
+                Service communications (transaction alerts, OTP confirmations)
+                <span class="badge must">Essential</span>
+              </div>
+              <div class="d">Send you essential communications to keep you informed and secure (alerts, confirmations).</div>
+            </div>
+            <div class="toggle">
+              <span class="state off" id="state-P7-DC-04">Off</span>
+              <label class="switch" aria-label="Toggle consent for Service communications">
+                <input type="checkbox" id="toggle-P7-DC-04" />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+          <details>
+            <summary>View purpose details <span class="chev">⌄</span></summary>
+            <div class="detail">
+              <div class="kv">
+                <div class="k">Purpose</div>
+                <div class="v">Operational alerts and confirmations for security and servicing (not marketing).</div>
+              </div>
+              <div class="kv">
+                <div class="k">Categories of data</div>
+                <div class="v">Mobile number/email, transaction event metadata, alert preferences, language selection.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Sharing / processors</div>
+                <div class="v">SMS/email gateways and notification platforms used to deliver messages.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Retention</div>
+                <div class="v">Min: 90 days. Max: up to 2 years for delivery logs and audit support.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Withdrawal implications</div>
+                <div class="v"><strong>If withdrawn:</strong> You may not receive important alerts; for safety, we may restrict certain transactions.</div>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- P7-DC-05 -->
+        <div class="card" data-purpose="P7-DC-05">
+          <div class="card-top">
+            <div class="card-title">
+              <div class="t">
+                Customer support via chat/call (incl. WhatsApp banking where enabled)
+                <span class="badge opt">Optional</span>
+              </div>
+              <div class="d">Help resolve issues through chat/call; maintain support tickets and conversation records.</div>
+            </div>
+            <div class="toggle">
+              <span class="state off" id="state-P7-DC-05">Off</span>
+              <label class="switch" aria-label="Toggle consent for Customer support via chat/call">
+                <input type="checkbox" id="toggle-P7-DC-05" />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+          <details>
+            <summary>View purpose details <span class="chev">⌄</span></summary>
+            <div class="detail">
+              <div class="kv">
+                <div class="k">Purpose</div>
+                <div class="v">Ticket management, query resolution, complaint handling, and service quality.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Categories of data</div>
+                <div class="v">Conversation content, contact details, issue context, screenshots/docs you share, and identifiers required to locate your account.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Sharing / processors</div>
+                <div class="v">Customer support platforms, call recording vendors (where applicable), and messaging providers used for chat/WhatsApp workflows.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Retention</div>
+                <div class="v">Min: 180 days. Max: up to 5 years for grievance handling and dispute support (may vary by issue type).</div>
+              </div>
+              <div class="kv">
+                <div class="k">Withdrawal implications</div>
+                <div class="v"><strong>If withdrawn:</strong> Digital support options may be limited; you can still use other support channels.</div>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- P7-DC-06 -->
+        <div class="card" data-purpose="P7-DC-06">
+          <div class="card-top">
+            <div class="card-title">
+              <div class="t">
+                Personalization (language, dashboard layout, quick actions)
+                <span class="badge opt">Optional</span>
+              </div>
+              <div class="d">Improve your experience by saving preferences and presenting relevant shortcuts.</div>
+            </div>
+            <div class="toggle">
+              <span class="state off" id="state-P7-DC-06">Off</span>
+              <label class="switch" aria-label="Toggle consent for Personalization">
+                <input type="checkbox" id="toggle-P7-DC-06" />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+          <details>
+            <summary>View purpose details <span class="chev">⌄</span></summary>
+            <div class="detail">
+              <div class="kv">
+                <div class="k">Purpose</div>
+                <div class="v">Remember your UI preferences and show convenience features based on your selected settings.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Categories of data</div>
+                <div class="v">Language choice, accessibility settings, feature toggles, preferred accounts, and UI interaction preferences.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Sharing / processors</div>
+                <div class="v">Internal channel platforms and analytics strictly for preference storage and display logic.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Retention</div>
+                <div class="v">Min: while enabled. Max: until you withdraw or after 24 months of inactivity (whichever is earlier).</div>
+              </div>
+              <div class="kv">
+                <div class="k">Withdrawal implications</div>
+                <div class="v"><strong>If withdrawn:</strong> Personalization resets; core banking functionality remains unaffected.</div>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- P7-DC-07 -->
+        <div class="card" data-purpose="P7-DC-07">
+          <div class="card-top">
+            <div class="card-title">
+              <div class="t">
+                Usage analytics (service improvement)
+                <span class="badge opt">Optional</span>
+              </div>
+              <div class="d">Measure channel performance and improve reliability (crash logs, feature usage metrics).</div>
+            </div>
+            <div class="toggle">
+              <span class="state off" id="state-P7-DC-07">Off</span>
+              <label class="switch" aria-label="Toggle consent for Usage analytics">
+                <input type="checkbox" id="toggle-P7-DC-07" />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+          <details>
+            <summary>View purpose details <span class="chev">⌄</span></summary>
+            <div class="detail">
+              <div class="kv">
+                <div class="k">Purpose</div>
+                <div class="v">Improve app/web stability, reduce errors, and enhance service quality using aggregated insights.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Categories of data</div>
+                <div class="v">Crash logs, feature usage events, performance metrics, device/app version, and anonymized identifiers where feasible.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Sharing / processors</div>
+                <div class="v">Analytics and crash-reporting vendors (where used) under contractual controls; internal product/engineering teams.</div>
+              </div>
+              <div class="kv">
+                <div class="k">Retention</div>
+                <div class="v">Min: 90 days. Max: 24 months (aggregated trends may be retained longer without identifying you).</div>
+              </div>
+              <div class="kv">
+                <div class="k">Withdrawal implications</div>
+                <div class="v"><strong>If withdrawn:</strong> Core services continue; we may have limited insight to proactively improve your experience.</div>
+              </div>
+            </div>
+          </details>
+        </div>
+
+      </div>
+
+      <div class="note" style="margin-top:12px;">
+        <strong>Withdrawal:</strong> You can withdraw consent as easily as giving it using “Withdraw all” or by switching off any purpose.
+        On withdrawal, downstream systems must stop processing for that purpose (except where required for security, disputes, or legal obligations).
+      </div>
+
+      <div class="footer">
+        <div>
+          <strong>Data principal rights:</strong> Access, correction, erasure (where applicable), grievance redressal.
+          <span class="muted">Use in-app help → “Privacy & Rights” or contact the grievance officer.</span>
+        </div>
+        <div class="muted">
+          Grievance: <a href="#" onclick="return false;">privacy-grievance@yourbank.example</a> • Response timelines as per policy
+        </div>
+      </div>
+
+      <div class="artifact" id="artifactBox" style="display:none;">
+        <div class="bar">
+          <div class="title">Consent Artifact (preview)</div>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <button class="smallbtn" id="copyArtifactBtn" type="button">Copy</button>
+            <button class="smallbtn danger" id="clearPreviewBtn" type="button">Close</button>
+          </div>
+        </div>
+        <pre id="artifactPre"></pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // -----------------------------
+    // Configuration (Purpose Master)
+    // -----------------------------
+    const PURPOSES = [
+      {
+        id: "P7-DC-01",
+        name: "Secure login, OTP & session protection",
+        essential: true
+      },
+      {
+        id: "P7-DC-02",
+        name: "Fraud monitoring & anomaly detection",
+        essential: true
+      },
+      {
+        id: "P7-DC-03",
+        name: "Digital transaction servicing (UPI / NetBanking / App)",
+        essential: true
+      },
+      {
+        id: "P7-DC-04",
+        name: "Service communications (transaction alerts, OTP confirmations)",
+        essential: true
+      },
+      {
+        id: "P7-DC-05",
+        name: "Customer support via chat/call (incl. WhatsApp banking where enabled)",
+        essential: false
+      },
+      {
+        id: "P7-DC-06",
+        name: "Personalization (language, dashboard layout, quick actions)",
+        essential: false
+      },
+      {
+        id: "P7-DC-07",
+        name: "Usage analytics (service improvement)",
+        essential: false
+      }
+    ];
+
+    // Default state: all OFF (no pre-checked toggles).
+    // However, for "Essential" purposes in real banking apps, you may force ON and disable toggle.
+    // Here we keep UI consistent with your BRD: no pre-check, but mark Essential and show implications.
+    // If you want to force Essential ON: set FORCE_ESSENTIAL_ON = true.
+    const FORCE_ESSENTIAL_ON = false;
+
+    // In a real implementation, these would be server-generated:
+    const session = {
+      noticeId: "MPN-07",
+      noticeVersion: "v1.0",
+      channel: "DIGITAL_BANKING",
+      dataFiduciary: "Your Bank (Digital Channels)",
+      language: "en",
+      dataPrincipalIdMasked: "DP-XXXX-4821",
+      deviceIdMasked: "DEV-XXA1",
+      issuedAt: new Date().toISOString()
+    };
+
+    const state = {
+      selections: {},     // purposeId -> boolean
+      timestamps: {},     // purposeId -> ISO timestamp of last change
+    };
+
+    function $(id){ return document.getElementById(id); }
+
+    function updateCountAndCTA(){
+      const selected = Object.values(state.selections).filter(Boolean).length;
+      $("consentCount").textContent = `${selected} selected`;
+      $("saveBtn").disabled = (selected === 0); // keep consistent with "explicit affirmative action"
+    }
+
+    function setToggleUI(purposeId, checked){
+      const stateEl = $("state-" + purposeId);
+      const inputEl = $("toggle-" + purposeId);
+      if (!stateEl || !inputEl) return;
+
+      inputEl.checked = !!checked;
+      stateEl.textContent = checked ? "On" : "Off";
+      stateEl.classList.toggle("on", checked);
+      stateEl.classList.toggle("off", !checked);
+    }
+
+    function applyEssentialRules(){
+      if (!FORCE_ESSENTIAL_ON) return;
+      PURPOSES.forEach(p => {
+        if (p.essential){
+          state.selections[p.id] = true;
+          state.timestamps[p.id] = new Date().toISOString();
+          const inputEl = $("toggle-" + p.id);
+          if (inputEl){
+            inputEl.checked = true;
+            inputEl.disabled = true;
+            inputEl.title = "Essential purpose for secure service delivery";
+          }
+          setToggleUI(p.id, true);
+        }
+      });
+    }
+
+    function init(){
+      // Initialize all toggles OFF
+      PURPOSES.forEach(p => {
+        state.selections[p.id] = false;
+        state.timestamps[p.id] = null;
+
+        const inputEl = $("toggle-" + p.id);
+        if (inputEl){
+          inputEl.addEventListener("change", (e) => {
+            state.selections[p.id] = e.target.checked;
+            state.timestamps[p.id] = new Date().toISOString();
+            setToggleUI(p.id, e.target.checked);
+            updateCountAndCTA();
+          });
+        }
+
+        setToggleUI(p.id, false);
+      });
+
+      // language selector
+      $("lang").addEventListener("change", (e) => {
+        session.language = e.target.value;
+      });
+
+      $("withdrawAllBtn").addEventListener("click", () => {
+        PURPOSES.forEach(p => {
+          // if we force essential on, do not allow withdraw of essential via "withdraw all"
+          if (FORCE_ESSENTIAL_ON && p.essential) return;
+
+          state.selections[p.id] = false;
+          state.timestamps[p.id] = new Date().toISOString();
+          const inputEl = $("toggle-" + p.id);
+          if (inputEl) inputEl.checked = false;
+          setToggleUI(p.id, false);
+        });
+        updateCountAndCTA();
+      });
+
+      $("saveBtn").addEventListener("click", () => {
+        const artifact = buildConsentArtifact();
+        $("artifactPre").textContent = JSON.stringify(artifact, null, 2);
+        $("artifactBox").style.display = "block";
+        // In production: send artifact to CMP backend; downstream systems subscribe to change events.
+      });
+
+      $("copyArtifactBtn").addEventListener("click", async () => {
+        try{
+          await navigator.clipboard.writeText($("artifactPre").textContent);
+          $("copyArtifactBtn").textContent = "Copied";
+          setTimeout(()=> $("copyArtifactBtn").textContent = "Copy", 900);
+        }catch(err){
+          alert("Copy failed. Please manually select and copy.");
+        }
+      });
+
+      $("clearPreviewBtn").addEventListener("click", () => {
+        $("artifactBox").style.display = "none";
+      });
+
+      applyEssentialRules();
+      updateCountAndCTA();
+    }
+
+    function buildConsentArtifact(){
+      const now = new Date().toISOString();
+
+      const entries = PURPOSES.map(p => {
+        const granted = !!state.selections[p.id];
+        const ts = state.timestamps[p.id] || null;
+
+        return {
+          purposeId: p.id,
+          purposeName: p.name,
+          status: granted ? "GRANTED" : "WITHHELD",
+          isEssential: !!p.essential,
+          language: session.language,
+          timestamp: ts, // last change time for this purpose
+          // audit-friendly fields (placeholders for real system integration)
+          source: "BANK_LOGIN_NOTICE",
+          channel: "WEB_OR_APP",
+          withdrawal: granted ? null : {
+            withdrawnAt: ts,
+            implication: "Downstream systems must stop processing for this purpose unless required for security, dispute resolution, or legal obligations."
+          }
+        };
+      });
+
+      // A compact consent “digest” for downstream systems
+      const digest = entries.reduce((acc, e) => {
+        acc[e.purposeId] = e.status;
+        return acc;
+      }, {});
+
+      return {
+        consentArtifactId: "CA-" + Math.random().toString(16).slice(2).toUpperCase() + "-" + Date.now(),
+        noticeId: session.noticeId,
+        noticeVersion: session.noticeVersion,
+        issuedAt: session.issuedAt,
+        capturedAt: now,
+        dataFiduciary: session.dataFiduciary,
+        dataPrincipal: {
+          idMasked: session.dataPrincipalIdMasked
+        },
+        device: {
+          deviceIdMasked: session.deviceIdMasked
+        },
+        language: session.language,
+        entries,
+        digest
+      };
+    }
+
+    init();
+  </script>
+</body>
+</html>
